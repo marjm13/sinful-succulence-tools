@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sinful Succulence — Pricing & Costing Calculator</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg-secondary: #f7f6f3;
+    --text-primary: #1a1a18;
+    --text-secondary: #6b6a65;
+    --text-tertiary: #9c9a94;
+    --border: rgba(0,0,0,0.12);
+    --border-md: rgba(0,0,0,0.22);
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --green-bg: #E1F5EE;
+    --green-text: #085041;
+    --amber-bg: #FAEEDA;
+    --amber-text: #633806;
+    --red-bg: #FCEBEB;
+    --red-text: #791F1F;
+    --green-val: #0F6E56;
+    --amber-val: #854F0B;
+    --red-val: #A32D2D;
+    --accent: #D4537E;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1a;
+      --bg-secondary: #252522;
+      --text-primary: #e8e6de;
+      --text-secondary: #9c9a92;
+      --text-tertiary: #6b6a63;
+      --border: rgba(255,255,255,0.1);
+      --border-md: rgba(255,255,255,0.18);
+      --green-bg: #04342C;
+      --green-text: #9FE1CB;
+      --amber-bg: #412402;
+      --amber-text: #FAC775;
+      --red-bg: #501313;
+      --red-text: #F7C1C1;
+      --green-val: #5DCAA5;
+      --amber-val: #EF9F27;
+      --red-val: #F09595;
+    }
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .logo-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .header h1 {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .header p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-left: 20px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+
+  .product-name-wrap {
+    margin-bottom: 1.75rem;
+  }
+
+  .product-name-input {
+    width: 100%;
+    border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md);
+    padding: 8px 12px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-primary);
+    background: var(--bg);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .product-name-input:focus {
+    border-color: var(--accent);
+  }
+
+  .product-name-input::placeholder {
+    color: var(--text-tertiary);
+    font-weight: 400;
+  }
+
+  .ingredients-wrap {
+    margin-bottom: 1.75rem;
+  }
+
+  .ing-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  .ing-table th {
+    color: var(--text-secondary);
+    font-weight: 400;
+    text-align: left;
+    padding: 4px 8px 8px;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .ing-table th:nth-child(2),
+  .ing-table th:nth-child(4) { text-align: right; }
+  .ing-table th:last-child { width: 36px; text-align: center; }
+
+  .ing-table td {
+    padding: 5px 6px;
+    vertical-align: middle;
+  }
+
+  .ing-table tr:not(:last-child) td {
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .ing-input {
+    width: 100%;
+    border: 0.5px solid transparent;
+    border-radius: var(--radius-md);
+    padding: 5px 7px;
+    font-size: 13px;
+    color: var(--text-primary);
+    background: transparent;
+    outline: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .ing-input:focus {
+    border-color: var(--border-md);
+    background: var(--bg-secondary);
+  }
+
+  .ing-input.right { text-align: right; }
+  .ing-col-name { min-width: 130px; }
+  .ing-col-qty input { width: 65px; }
+  .ing-col-unit input { width: 52px; }
+  .ing-col-cost input { width: 75px; }
+
+  .remove-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-tertiary);
+    font-size: 16px;
+    line-height: 1;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: color 0.15s, background 0.15s;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .remove-btn:hover { color: var(--red-val); background: var(--red-bg); }
+
+  .add-ing-btn {
+    width: 100%;
+    border: 0.5px dashed var(--border-md);
+    background: none;
+    border-radius: var(--radius-md);
+    padding: 7px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .add-ing-btn:hover { background: var(--bg-secondary); }
+
+  .other-costs {
+    margin-bottom: 1.75rem;
+  }
+
+  .input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .input-row label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    flex: 1;
+  }
+
+  .input-row input {
+    width: 88px;
+    border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md);
+    padding: 5px 8px;
+    font-size: 13px;
+    text-align: right;
+    color: var(--text-primary);
+    background: var(--bg);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .input-row input:focus { border-color: var(--accent); }
+
+  .input-row .unit {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    width: 18px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 0.5px solid var(--border);
+    margin: 1.5rem 0;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 540px) {
+    .results-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .results-grid .metric:last-child { grid-column: 1 / -1; }
+  }
+
+  .metric {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+  }
+
+  .metric-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+    line-height: 1.3;
+  }
+
+  .metric-value {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .metric-value.good { color: var(--green-val); }
+  .metric-value.warn { color: var(--amber-val); }
+  .metric-value.bad  { color: var(--red-val); }
+
+  .breakdown {
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    font-size: 13px;
+    margin-bottom: 1rem;
+  }
+
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 14px;
+  }
+
+  .breakdown-row:not(:last-child) { border-bottom: 0.5px solid var(--border); }
+
+  .breakdown-row.total {
+    font-weight: 500;
+    background: var(--bg-secondary);
+  }
+
+  .breakdown-row .bval {
+    font-variant-numeric: tabular-nums;
+    color: var(--text-primary);
+  }
+
+  .breakdown-row span:first-child { color: var(--text-secondary); }
+  .breakdown-row.total span:first-child { color: var(--text-primary); }
+
+  .verdict {
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    font-size: 13px;
+    line-height: 1.55;
+    display: none;
+    margin-bottom: 1rem;
+  }
+
+  .verdict.good { background: var(--green-bg); color: var(--green-text); }
+  .verdict.warn { background: var(--amber-bg); color: var(--amber-text); }
+  .verdict.bad  { background: var(--red-bg);   color: var(--red-text); }
+
+  .footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 0.5px solid var(--border);
+    font-size: 12px;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .reset-btn {
+    background: none;
+    border: 0.5px solid var(--border-md);
+    border-radius: var(--radius-md);
+    padding: 4px 10px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .reset-btn:hover { background: var(--bg-secondary); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-top">
+      <div class="logo-dot"></div>
+      <h1>Pricing & costing calculator</h1>
+    </div>
+    <p>Sinful Succulence — per product / per batch</p>
+  </div>
+
+  <div class="product-name-wrap">
+    <div class="section-label">Product</div>
+    <input class="product-name-input" id="productName" type="text" placeholder="e.g. Classic chocolate chip cookies" />
+  </div>
+
+  <div class="ingredients-wrap">
+    <div class="section-label">Ingredients</div>
+    <table class="ing-table">
+      <thead>
+        <tr>
+          <th class="ing-col-name">Ingredient</th>
+          <th class="ing-col-qty" style="text-align:right">Qty</th>
+          <th class="ing-col-unit">Unit</th>
+          <th class="ing-col-cost" style="text-align:right">Cost (₱)</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="ingBody"></tbody>
+    </table>
+    <button class="add-ing-btn" onclick="addIngredient()">+ add ingredient</button>
+  </div>
+
+  <div class="other-costs">
+    <div class="section-label">Other costs per batch</div>
+    <div class="input-row">
+      <label>Packaging (boxes, stickers, ribbon)</label>
+      <input type="number" id="packagingCost" value="0" min="0" step="1" oninput="recalc()" />
+      <span class="unit">₱</span>
+    </div>
+    <div class="input-row">
+      <label>Delivery / gas / misc</label>
+      <input type="number" id="deliveryCost" value="0" min="0" step="1" oninput="recalc()" />
+      <span class="unit">₱</span>
+    </div>
+    <div class="input-row">
+      <label>Labor / time allowance</label>
+      <input type="number" id="laborCost" value="0" min="0" step="1" oninput="recalc()" />
+      <span class="unit">₱</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div style="margin-bottom:1.75rem">
+    <div class="section-label">Batch & pricing</div>
+    <div class="input-row">
+      <label>Pieces per batch</label>
+      <input type="number" id="batchSize" value="12" min="1" step="1" oninput="recalc()" />
+      <span class="unit">pcs</span>
+    </div>
+    <div class="input-row">
+      <label>Selling price per piece</label>
+      <input type="number" id="sellingPrice" value="0" min="0" step="1" oninput="recalc()" />
+      <span class="unit">₱</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">Results</div>
+
+  <div class="results-grid">
+    <div class="metric">
+      <div class="metric-label">Cost per batch</div>
+      <div class="metric-value" id="r-batchCost">₱0</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Cost per piece</div>
+      <div class="metric-value" id="r-unitCost">₱0</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Revenue per batch</div>
+      <div class="metric-value" id="r-revenue">₱0</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Profit per batch</div>
+      <div class="metric-value" id="r-profit">₱0</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Margin</div>
+      <div class="metric-value" id="r-margin">0%</div>
+    </div>
+  </div>
+
+  <div class="breakdown">
+    <div class="breakdown-row"><span>Ingredients total</span><span class="bval" id="b-ing">₱0</span></div>
+    <div class="breakdown-row"><span>Packaging</span><span class="bval" id="b-pkg">₱0</span></div>
+    <div class="breakdown-row"><span>Delivery / misc</span><span class="bval" id="b-del">₱0</span></div>
+    <div class="breakdown-row"><span>Labor</span><span class="bval" id="b-lab">₱0</span></div>
+    <div class="breakdown-row total"><span>Total batch cost</span><span class="bval" id="b-total">₱0</span></div>
+  </div>
+
+  <div class="verdict" id="verdict"></div>
+
+  <div class="footer">
+    <span>Sinful Succulence &middot; Internal tool</span>
+    <button class="reset-btn" onclick="resetAll()">Reset</button>
+  </div>
+
+</div>
+
+<script>
+let ingredients = [
+  {name:'Butter', qty:250, unit:'g', cost:120},
+  {name:'Chocolate chips', qty:200, unit:'g', cost:95},
+  {name:'Cake flour', qty:300, unit:'g', cost:45},
+  {name:'Sugar', qty:150, unit:'g', cost:30},
+];
+
+function fmt(n) { return '₱' + Math.round(n).toLocaleString(); }
+function pct(n) { return Math.round(n) + '%'; }
+
+function renderIngredients() {
+  const tbody = document.getElementById('ingBody');
+  tbody.innerHTML = '';
+  ingredients.forEach((ing, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="ing-col-name"><input class="ing-input" type="text" value="${ing.name}" placeholder="Ingredient" oninput="ingredients[${i}].name=this.value"></td>
+      <td class="ing-col-qty"><input class="ing-input right" type="number" value="${ing.qty}" min="0" step="any" oninput="ingredients[${i}].qty=parseFloat(this.value)||0;recalc()"></td>
+      <td class="ing-col-unit"><input class="ing-input" type="text" value="${ing.unit}" placeholder="g/ml/pc" oninput="ingredients[${i}].unit=this.value"></td>
+      <td class="ing-col-cost"><input class="ing-input right" type="number" value="${ing.cost}" min="0" step="any" placeholder="0" oninput="ingredients[${i}].cost=parseFloat(this.value)||0;recalc()"></td>
+      <td><button class="remove-btn" onclick="removeIngredient(${i})">×</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  recalc();
+}
+
+function addIngredient() {
+  ingredients.push({name:'', qty:0, unit:'g', cost:0});
+  renderIngredients();
+  const inputs = document.querySelectorAll('.ing-col-name input');
+  inputs[inputs.length - 1].focus();
+}
+
+function removeIngredient(i) {
+  ingredients.splice(i, 1);
+  renderIngredients();
+}
+
+function recalc() {
+  const ingTotal = ingredients.reduce((s, ing) => s + (ing.cost || 0), 0);
+  const pkg   = parseFloat(document.getElementById('packagingCost').value) || 0;
+  const del   = parseFloat(document.getElementById('deliveryCost').value)  || 0;
+  const lab   = parseFloat(document.getElementById('laborCost').value)     || 0;
+  const batch = Math.max(1, parseInt(document.getElementById('batchSize').value) || 1);
+  const price = parseFloat(document.getElementById('sellingPrice').value)  || 0;
+
+  const totalCost = ingTotal + pkg + del + lab;
+  const unitCost  = totalCost / batch;
+  const revenue   = price * batch;
+  const profit    = revenue - totalCost;
+  const margin    = revenue > 0 ? (profit / revenue) * 100 : 0;
+
+  document.getElementById('r-batchCost').textContent = fmt(totalCost);
+  document.getElementById('r-unitCost').textContent  = fmt(unitCost);
+  document.getElementById('r-revenue').textContent   = fmt(revenue);
+
+  const profitEl = document.getElementById('r-profit');
+  profitEl.textContent = fmt(profit);
+  profitEl.className = 'metric-value' + (profit > 0 ? ' good' : profit < 0 ? ' bad' : ' warn');
+
+  const marginEl = document.getElementById('r-margin');
+  marginEl.textContent = pct(margin);
+  marginEl.className = 'metric-value' + (margin >= 50 ? ' good' : margin >= 30 ? ' warn' : ' bad');
+
+  document.getElementById('b-ing').textContent   = fmt(ingTotal);
+  document.getElementById('b-pkg').textContent   = fmt(pkg);
+  document.getElementById('b-del').textContent   = fmt(del);
+  document.getElementById('b-lab').textContent   = fmt(lab);
+  document.getElementById('b-total').textContent = fmt(totalCost);
+
+  const vEl = document.getElementById('verdict');
+  if (price === 0) { vEl.style.display = 'none'; return; }
+  vEl.style.display = 'block';
+
+  if (margin >= 50) {
+    vEl.className = 'verdict good';
+    vEl.textContent = `Healthy margin at ${pct(margin)}. Your pricing is working well for a premium brand. Cost per piece is ${fmt(unitCost)}.`;
+  } else if (margin >= 30) {
+    vEl.className = 'verdict warn';
+    vEl.textContent = `Margin of ${pct(margin)} is workable but a little tight for a premium brand. Consider if costs can be trimmed or if pricing can nudge up. Cost per piece is ${fmt(unitCost)}.`;
+  } else if (margin >= 0) {
+    vEl.className = 'verdict warn';
+    vEl.textContent = `Margin of ${pct(margin)} is low. At ${fmt(unitCost)} cost per piece, your price of ${fmt(price)} leaves little room for growth. Review ingredient costs or adjust your selling price.`;
+  } else {
+    vEl.className = 'verdict bad';
+    vEl.textContent = `You're losing ${fmt(Math.abs(profit))} per batch at this price. Cost per piece (${fmt(unitCost)}) exceeds your selling price. Adjust before taking orders at this rate.`;
+  }
+}
+
+function resetAll() {
+  if (!confirm('Reset everything to defaults?')) return;
+  ingredients = [
+    {name:'Butter', qty:250, unit:'g', cost:120},
+    {name:'Chocolate chips', qty:200, unit:'g', cost:95},
+    {name:'Cake flour', qty:300, unit:'g', cost:45},
+    {name:'Sugar', qty:150, unit:'g', cost:30},
+  ];
+  document.getElementById('productName').value = '';
+  document.getElementById('packagingCost').value = 0;
+  document.getElementById('deliveryCost').value = 0;
+  document.getElementById('laborCost').value = 0;
+  document.getElementById('batchSize').value = 12;
+  document.getElementById('sellingPrice').value = 0;
+  renderIngredients();
+}
+
+renderIngredients();
+</script>
+</body>
+</html>
