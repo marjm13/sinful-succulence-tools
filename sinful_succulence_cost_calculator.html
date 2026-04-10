@@ -3,588 +3,488 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sinful Succulence — Pricing & Costing Calculator</title>
+<title>Sinful Succulence — Costing Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Chivo:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#260600;
+  --bg2:#341008;
+  --bg3:#3f160a;
+  --text:#E1CDAA;
+  --text2:#c4ae8a;
+  --text3:#9a836a;
+  --header:#FFF5EA;
+  --border:rgba(225,205,170,0.13);
+  --border2:rgba(225,205,170,0.28);
+  --r:8px;--rl:12px;
+  --green-bg:#0a2e1a;--green-text:#7dcba0;--green-val:#6dbf8f;
+  --amber-bg:#2e1a00;--amber-text:#d4a040;--amber-val:#c99030;
+  --red-bg:#2e0606;--red-text:#d47070;--red-val:#c96060;
+  --accent:#c2763a;--accent-bg:#2e1506;
+  --font-serif:'IBM Plex Serif',Georgia,serif;
+  --font-body:'Chivo',sans-serif;
+}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;padding:2.5rem 1.5rem;font-weight:300}
+.page{max-width:760px;margin:0 auto}
 
-  :root {
-    --bg: #ffffff;
-    --bg-secondary: #f7f6f3;
-    --text-primary: #1a1a18;
-    --text-secondary: #6b6a65;
-    --text-tertiary: #9c9a94;
-    --border: rgba(0,0,0,0.12);
-    --border-md: rgba(0,0,0,0.22);
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --green-bg: #E1F5EE;
-    --green-text: #085041;
-    --amber-bg: #FAEEDA;
-    --amber-text: #633806;
-    --red-bg: #FCEBEB;
-    --red-text: #791F1F;
-    --green-val: #0F6E56;
-    --amber-val: #854F0B;
-    --red-val: #A32D2D;
-    --accent: #D4537E;
-  }
+.header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:0.5px solid var(--border)}
+.header-top{display:flex;align-items:center;gap:12px;margin-bottom:5px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:2px}
+.header h1{font-family:var(--font-serif);font-size:22px;font-weight:400;color:var(--header);letter-spacing:0.01em}
+.header p{font-family:var(--font-serif);font-size:13px;font-style:italic;color:var(--text2);margin-left:20px;margin-top:2px}
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1c1c1a;
-      --bg-secondary: #252522;
-      --text-primary: #e8e6de;
-      --text-secondary: #9c9a92;
-      --text-tertiary: #6b6a63;
-      --border: rgba(255,255,255,0.1);
-      --border-md: rgba(255,255,255,0.18);
-      --green-bg: #04342C;
-      --green-text: #9FE1CB;
-      --amber-bg: #412402;
-      --amber-text: #FAC775;
-      --red-bg: #501313;
-      --red-text: #F7C1C1;
-      --green-val: #5DCAA5;
-      --amber-val: #EF9F27;
-      --red-val: #F09595;
-    }
-  }
+.slabel{font-family:var(--font-body);font-size:10px;font-weight:400;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:9px}
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--bg);
-    color: var(--text-primary);
-    min-height: 100vh;
-    padding: 2rem 1rem;
-  }
+.product-bar{display:flex;align-items:center;gap:8px;margin-bottom:1.75rem;flex-wrap:wrap}
+.product-select{flex:1;min-width:180px;border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:14px;font-family:var(--font-serif);font-weight:400;color:var(--header);background:var(--bg2);outline:none;cursor:pointer;transition:border-color .15s}
+.product-select:focus{border-color:var(--accent)}
+.product-select option{background:var(--bg2);color:var(--header)}
+.bar-btn{border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 14px;font-size:13px;font-family:var(--font-body);color:var(--text2);background:transparent;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s,border-color .15s}
+.bar-btn:hover{background:var(--bg2);color:var(--text)}
+.bar-btn.accent{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.bar-btn.accent:hover{background:var(--accent);color:#fff5ea}
+.bar-btn.danger:hover{background:var(--red-bg);color:var(--red-text);border-color:var(--red-val)}
+.save-indicator{font-size:12px;font-family:var(--font-serif);font-style:italic;color:var(--text3);margin-left:auto}
+.save-indicator.saved{color:var(--green-val)}
 
-  .page {
-    max-width: 680px;
-    margin: 0 auto;
-  }
+.rename-wrap{margin-bottom:1.75rem}
+.rename-input{width:100%;border:0.5px solid var(--border2);border-radius:var(--r);padding:9px 13px;font-size:16px;font-family:var(--font-serif);font-style:italic;font-weight:300;color:var(--header);background:var(--bg2);outline:none;transition:border-color .15s}
+.rename-input:focus{border-color:var(--accent)}
+.rename-input::placeholder{color:var(--text3);font-style:italic}
 
-  .header {
-    margin-bottom: 2rem;
-    padding-bottom: 1.25rem;
-    border-bottom: 0.5px solid var(--border);
-  }
+.batch-row{display:flex;align-items:center;gap:10px;margin-bottom:1.75rem}
+.batch-row label{font-size:13px;color:var(--text2)}
+.batch-row input{width:72px;border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:13px;font-family:var(--font-body);text-align:right;color:var(--text);background:var(--bg2);outline:none;transition:border-color .15s}
+.batch-row input:focus{border-color:var(--accent)}
+.batch-row .unit{font-size:13px;color:var(--text3)}
 
-  .header-top {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 4px;
-  }
+.ing-wrap{margin-bottom:1.5rem;overflow-x:auto}
+.ing-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px;min-width:620px}
+.ing-table th{color:var(--text3);font-weight:300;text-align:left;padding:4px 5px 9px;border-bottom:0.5px solid var(--border);white-space:nowrap;font-size:11px;letter-spacing:0.04em;text-transform:uppercase}
+.ing-table th.r,.ing-table td.r{text-align:right}
+.ing-table td{padding:3px 3px;vertical-align:middle}
+.ing-table tbody tr:not(:last-child) td{border-bottom:0.5px solid var(--border)}
+.ing-table tfoot td{border-top:0.5px solid var(--border2);padding:8px 5px;font-family:var(--font-serif);font-style:italic;font-size:13px;color:var(--text2)}
 
-  .logo-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--accent);
-    flex-shrink: 0;
-  }
+.fi{width:100%;border:0.5px solid transparent;border-radius:var(--r);padding:5px 7px;font-size:13px;font-family:var(--font-body);font-weight:300;color:var(--text);background:transparent;outline:none;transition:border-color .15s,background .15s}
+.fi:focus{border-color:var(--border2);background:var(--bg2)}
+.fi.r{text-align:right}
+.fi.computed{color:var(--text3);background:var(--bg3);border-color:var(--border);cursor:default;font-size:12px;text-align:right;padding:5px 7px;border-radius:var(--r)}
 
-  .header h1 {
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--text-primary);
-  }
+.remove-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;line-height:1;padding:2px 5px;border-radius:4px;transition:color .15s,background .15s;display:block;margin:0 auto}
+.remove-btn:hover{color:var(--red-text);background:var(--red-bg)}
+.add-btn{width:100%;border:0.5px dashed var(--border2);background:none;border-radius:var(--r);padding:8px;font-size:13px;font-family:var(--font-body);color:var(--text3);cursor:pointer;transition:background .15s,color .15s;margin-bottom:1.5rem}
+.add-btn:hover{background:var(--bg2);color:var(--text2)}
 
-  .header p {
-    font-size: 13px;
-    color: var(--text-secondary);
-    margin-left: 20px;
-  }
+.ing-hint{font-size:11px;font-family:var(--font-serif);font-style:italic;color:var(--text3);margin-top:4px;margin-bottom:12px;line-height:1.6}
+.ing-hint code{background:var(--bg3);border:0.5px solid var(--border);border-radius:4px;padding:1px 5px;font-size:11px;font-family:var(--font-body);font-style:normal}
 
-  .section-label {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text-tertiary);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 10px;
-  }
+.costs-wrap{margin-bottom:1.5rem}
+.input-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.input-row label{font-size:13px;color:var(--text2);flex:1;font-weight:300}
+.input-row input{width:88px;border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:13px;font-family:var(--font-body);text-align:right;color:var(--text);background:var(--bg2);outline:none;transition:border-color .15s}
+.input-row input:focus{border-color:var(--accent)}
+.input-row .unit{font-size:13px;color:var(--text3);width:16px}
+.pkg-hint{font-size:11px;font-family:var(--font-serif);font-style:italic;color:var(--text3);margin-top:-2px;margin-bottom:12px;line-height:1.5}
 
-  .product-name-wrap {
-    margin-bottom: 1.75rem;
-  }
+.divider{border:none;border-top:0.5px solid var(--border);margin:1.5rem 0}
 
-  .product-name-input {
-    width: 100%;
-    border: 0.5px solid var(--border-md);
-    border-radius: var(--radius-md);
-    padding: 8px 12px;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--text-primary);
-    background: var(--bg);
-    outline: none;
-    transition: border-color 0.15s;
-  }
+.selling-input{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.selling-input label{font-size:13px;color:var(--text2);flex:1;font-weight:300}
+.selling-input input{width:88px;border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:13px;font-family:var(--font-body);text-align:right;color:var(--text);background:var(--bg2);outline:none;transition:border-color .15s}
+.selling-input input:focus{border-color:var(--accent)}
+.selling-input .unit{font-size:13px;color:var(--text3);width:16px}
 
-  .product-name-input:focus {
-    border-color: var(--accent);
-  }
+.results-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-bottom:1rem}
+@media(max-width:540px){.results-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.results-grid .metric:last-child{grid-column:1/-1}}
+.metric{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:11px 13px}
+.metric-label{font-size:11px;color:var(--text3);margin-bottom:5px;line-height:1.3;letter-spacing:0.03em}
+.metric-value{font-family:var(--font-serif);font-size:19px;font-weight:400;color:var(--header);font-variant-numeric:tabular-nums}
+.metric-value.good{color:var(--green-val)}
+.metric-value.warn{color:var(--amber-val)}
+.metric-value.bad{color:var(--red-val)}
 
-  .product-name-input::placeholder {
-    color: var(--text-tertiary);
-    font-weight: 400;
-  }
+.breakdown{border:0.5px solid var(--border);border-radius:var(--rl);overflow:hidden;font-size:13px;margin-bottom:1rem}
+.brow{display:flex;justify-content:space-between;align-items:center;padding:9px 15px}
+.brow:not(:last-child){border-bottom:0.5px solid var(--border)}
+.brow.total{background:var(--bg2)}
+.brow span:first-child{color:var(--text2);font-weight:300}
+.brow.total span:first-child{font-family:var(--font-serif);font-style:italic;color:var(--text);font-weight:400}
+.brow.total .bval{font-family:var(--font-serif);font-weight:400;color:var(--header)}
+.bval{font-variant-numeric:tabular-nums;color:var(--text)}
 
-  .ingredients-wrap {
-    margin-bottom: 1.75rem;
-  }
+.verdict{border-radius:var(--r);padding:12px 16px;font-size:13px;font-family:var(--font-serif);font-style:italic;line-height:1.65;display:none;margin-bottom:1rem;border:0.5px solid}
+.verdict.good{background:var(--green-bg);color:var(--green-text);border-color:rgba(109,191,143,0.2)}
+.verdict.warn{background:var(--amber-bg);color:var(--amber-text);border-color:rgba(201,144,48,0.2)}
+.verdict.bad{background:var(--red-bg);color:var(--red-text);border-color:rgba(201,96,96,0.2)}
 
-  .ing-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-    margin-bottom: 8px;
-  }
+.empty-state{text-align:center;padding:4rem 1rem;color:var(--text3)}
+.empty-state p{font-family:var(--font-serif);font-style:italic;font-size:15px;margin-bottom:1.25rem;color:var(--text2)}
+.empty-state button{border:0.5px solid var(--accent);border-radius:var(--r);padding:9px 22px;font-size:13px;font-family:var(--font-body);color:var(--accent);background:var(--accent-bg);cursor:pointer;transition:background .15s,color .15s}
+.empty-state button:hover{background:var(--accent);color:#fff5ea}
 
-  .ing-table th {
-    color: var(--text-secondary);
-    font-weight: 400;
-    text-align: left;
-    padding: 4px 8px 8px;
-    border-bottom: 0.5px solid var(--border);
-  }
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:100;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border-radius:var(--rl);border:0.5px solid var(--border2);padding:1.75rem;width:340px;max-width:90vw}
+.modal h2{font-family:var(--font-serif);font-size:17px;font-weight:400;color:var(--header);margin-bottom:1rem}
+.modal input{width:100%;border:0.5px solid var(--border2);border-radius:var(--r);padding:9px 11px;font-size:14px;font-family:var(--font-serif);font-style:italic;color:var(--header);background:var(--bg);outline:none;margin-bottom:1rem;transition:border-color .15s}
+.modal input:focus{border-color:var(--accent)}
+.modal input::placeholder{color:var(--text3)}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end}
+.modal-actions button{border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 16px;font-size:13px;font-family:var(--font-body);background:transparent;color:var(--text2);cursor:pointer;transition:background .15s}
+.modal-actions button:hover{background:var(--bg3)}
+.modal-actions button.primary{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.modal-actions button.primary:hover{background:var(--accent);color:#fff5ea}
 
-  .ing-table th:nth-child(2),
-  .ing-table th:nth-child(4) { text-align: right; }
-  .ing-table th:last-child { width: 36px; text-align: center; }
-
-  .ing-table td {
-    padding: 5px 6px;
-    vertical-align: middle;
-  }
-
-  .ing-table tr:not(:last-child) td {
-    border-bottom: 0.5px solid var(--border);
-  }
-
-  .ing-input {
-    width: 100%;
-    border: 0.5px solid transparent;
-    border-radius: var(--radius-md);
-    padding: 5px 7px;
-    font-size: 13px;
-    color: var(--text-primary);
-    background: transparent;
-    outline: none;
-    transition: border-color 0.15s, background 0.15s;
-  }
-
-  .ing-input:focus {
-    border-color: var(--border-md);
-    background: var(--bg-secondary);
-  }
-
-  .ing-input.right { text-align: right; }
-  .ing-col-name { min-width: 130px; }
-  .ing-col-qty input { width: 65px; }
-  .ing-col-unit input { width: 52px; }
-  .ing-col-cost input { width: 75px; }
-
-  .remove-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text-tertiary);
-    font-size: 16px;
-    line-height: 1;
-    padding: 2px 6px;
-    border-radius: 4px;
-    transition: color 0.15s, background 0.15s;
-    display: block;
-    margin: 0 auto;
-  }
-
-  .remove-btn:hover { color: var(--red-val); background: var(--red-bg); }
-
-  .add-ing-btn {
-    width: 100%;
-    border: 0.5px dashed var(--border-md);
-    background: none;
-    border-radius: var(--radius-md);
-    padding: 7px;
-    font-size: 13px;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-
-  .add-ing-btn:hover { background: var(--bg-secondary); }
-
-  .other-costs {
-    margin-bottom: 1.75rem;
-  }
-
-  .input-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-  }
-
-  .input-row label {
-    font-size: 13px;
-    color: var(--text-secondary);
-    flex: 1;
-  }
-
-  .input-row input {
-    width: 88px;
-    border: 0.5px solid var(--border-md);
-    border-radius: var(--radius-md);
-    padding: 5px 8px;
-    font-size: 13px;
-    text-align: right;
-    color: var(--text-primary);
-    background: var(--bg);
-    outline: none;
-    transition: border-color 0.15s;
-  }
-
-  .input-row input:focus { border-color: var(--accent); }
-
-  .input-row .unit {
-    font-size: 13px;
-    color: var(--text-tertiary);
-    width: 18px;
-  }
-
-  .divider {
-    border: none;
-    border-top: 0.5px solid var(--border);
-    margin: 1.5rem 0;
-  }
-
-  .results-grid {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 8px;
-    margin-bottom: 1rem;
-  }
-
-  @media (max-width: 540px) {
-    .results-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    .results-grid .metric:last-child { grid-column: 1 / -1; }
-  }
-
-  .metric {
-    background: var(--bg-secondary);
-    border-radius: var(--radius-md);
-    padding: 10px 12px;
-  }
-
-  .metric-label {
-    font-size: 11px;
-    color: var(--text-secondary);
-    margin-bottom: 5px;
-    line-height: 1.3;
-  }
-
-  .metric-value {
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--text-primary);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .metric-value.good { color: var(--green-val); }
-  .metric-value.warn { color: var(--amber-val); }
-  .metric-value.bad  { color: var(--red-val); }
-
-  .breakdown {
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    font-size: 13px;
-    margin-bottom: 1rem;
-  }
-
-  .breakdown-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 14px;
-  }
-
-  .breakdown-row:not(:last-child) { border-bottom: 0.5px solid var(--border); }
-
-  .breakdown-row.total {
-    font-weight: 500;
-    background: var(--bg-secondary);
-  }
-
-  .breakdown-row .bval {
-    font-variant-numeric: tabular-nums;
-    color: var(--text-primary);
-  }
-
-  .breakdown-row span:first-child { color: var(--text-secondary); }
-  .breakdown-row.total span:first-child { color: var(--text-primary); }
-
-  .verdict {
-    border-radius: var(--radius-md);
-    padding: 10px 14px;
-    font-size: 13px;
-    line-height: 1.55;
-    display: none;
-    margin-bottom: 1rem;
-  }
-
-  .verdict.good { background: var(--green-bg); color: var(--green-text); }
-  .verdict.warn { background: var(--amber-bg); color: var(--amber-text); }
-  .verdict.bad  { background: var(--red-bg);   color: var(--red-text); }
-
-  .footer {
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 0.5px solid var(--border);
-    font-size: 12px;
-    color: var(--text-tertiary);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .reset-btn {
-    background: none;
-    border: 0.5px solid var(--border-md);
-    border-radius: var(--radius-md);
-    padding: 4px 10px;
-    font-size: 12px;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-
-  .reset-btn:hover { background: var(--bg-secondary); }
+.footer{margin-top:2.5rem;padding-top:1rem;border-top:0.5px solid var(--border);font-size:12px;font-family:var(--font-serif);font-style:italic;color:var(--text3);display:flex;justify-content:space-between;align-items:center}
 </style>
 </head>
 <body>
 <div class="page">
 
   <div class="header">
-    <div class="header-top">
-      <div class="logo-dot"></div>
-      <h1>Pricing & costing calculator</h1>
-    </div>
-    <p>Sinful Succulence — per product / per batch</p>
+    <div class="header-top"><div class="dot"></div><h1>Pricing & Costing Calculator</h1></div>
+    <p>Yes, all your recipes are saved automatically</p>
   </div>
 
-  <div class="product-name-wrap">
-    <div class="section-label">Product</div>
-    <input class="product-name-input" id="productName" type="text" placeholder="e.g. Classic chocolate chip cookies" />
+  <div class="slabel">Product</div>
+  <div class="product-bar">
+    <select class="product-select" id="productSelect" onchange="switchProduct(this.value)"></select>
+    <button class="bar-btn accent" onclick="openNewModal()">+ New</button>
+    <button class="bar-btn danger" id="deleteBtn" onclick="deleteProduct()">Delete</button>
+    <span class="save-indicator" id="saveIndicator">All changes saved</span>
   </div>
 
-  <div class="ingredients-wrap">
-    <div class="section-label">Ingredients</div>
-    <table class="ing-table">
-      <thead>
-        <tr>
-          <th class="ing-col-name">Ingredient</th>
-          <th class="ing-col-qty" style="text-align:right">Qty</th>
-          <th class="ing-col-unit">Unit</th>
-          <th class="ing-col-cost" style="text-align:right">Cost (₱)</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="ingBody"></tbody>
-    </table>
-    <button class="add-ing-btn" onclick="addIngredient()">+ add ingredient</button>
-  </div>
-
-  <div class="other-costs">
-    <div class="section-label">Other costs per batch</div>
-    <div class="input-row">
-      <label>Packaging (boxes, stickers, ribbon)</label>
-      <input type="number" id="packagingCost" value="0" min="0" step="1" oninput="recalc()" />
-      <span class="unit">₱</span>
+  <div id="mainContent">
+    <div class="rename-wrap">
+      <input class="rename-input" id="productName" type="text" placeholder="Product name…" oninput="renameProduct(this.value)" />
     </div>
-    <div class="input-row">
-      <label>Delivery / gas / misc</label>
-      <input type="number" id="deliveryCost" value="0" min="0" step="1" oninput="recalc()" />
-      <span class="unit">₱</span>
-    </div>
-    <div class="input-row">
-      <label>Labor / time allowance</label>
-      <input type="number" id="laborCost" value="0" min="0" step="1" oninput="recalc()" />
-      <span class="unit">₱</span>
-    </div>
-  </div>
 
-  <hr class="divider">
-
-  <div style="margin-bottom:1.75rem">
-    <div class="section-label">Batch & pricing</div>
-    <div class="input-row">
-      <label>Pieces per batch</label>
-      <input type="number" id="batchSize" value="12" min="1" step="1" oninput="recalc()" />
+    <div class="batch-row">
+      <label>Cookies per batch</label>
+      <input type="number" id="batchSize" value="12" min="1" step="1" oninput="saveAndRecalc()" />
       <span class="unit">pcs</span>
     </div>
-    <div class="input-row">
-      <label>Selling price per piece</label>
-      <input type="number" id="sellingPrice" value="0" min="0" step="1" oninput="recalc()" />
-      <span class="unit">₱</span>
+
+    <div class="ing-wrap">
+      <div class="slabel">Ingredients</div>
+      <table class="ing-table">
+        <thead>
+          <tr>
+            <th style="min-width:110px">Ingredient</th>
+            <th class="r" style="width:72px">Pack size</th>
+            <th class="r" style="width:88px">Pack cost (₱)</th>
+            <th class="r" style="width:78px">Cost / unit</th>
+            <th class="r" style="width:78px">Amt needed</th>
+            <th style="width:48px">Unit</th>
+            <th class="r" style="width:82px">Batch cost (₱)</th>
+            <th style="width:86px">Notes</th>
+            <th style="width:28px"></th>
+          </tr>
+        </thead>
+        <tbody id="ingBody"></tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6">Total ingredients cost</td>
+            <td class="r" id="foot-total">₱0.00</td>
+            <td colspan="2"></td>
+          </tr>
+        </tfoot>
+      </table>
+      <div class="ing-hint">
+        Enter <code>pack size</code> + <code>pack cost</code> → <code>cost / unit</code> auto-calculates. Enter <code>amount needed</code> → <code>batch cost</code> auto-calculates.
+      </div>
+      <button class="add-btn" onclick="addIngredient()">+ add ingredient</button>
     </div>
+
+    <div class="costs-wrap">
+      <div class="slabel">Other costs per batch</div>
+      <div class="input-row">
+        <label>Packaging (boxes, stickers, inserts, ribbon…)</label>
+        <input type="number" id="packagingCost" value="0" min="0" step="1" oninput="saveAndRecalc()" />
+        <span class="unit">₱</span>
+      </div>
+      <p class="pkg-hint">Refer to your packaging sheets per variant to get this number, then enter the total here.</p>
+      <div class="input-row">
+        <label>Labor & overhead (batter, baking, electricity, cleaning…)</label>
+        <input type="number" id="laborCost" value="0" min="0" step="1" oninput="saveAndRecalc()" />
+        <span class="unit">₱</span>
+      </div>
+      <div class="input-row">
+        <label>Delivery / gas / misc</label>
+        <input type="number" id="deliveryCost" value="0" min="0" step="1" oninput="saveAndRecalc()" />
+        <span class="unit">₱</span>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div style="margin-bottom:1.75rem">
+      <div class="slabel">Pricing</div>
+      <div class="selling-input">
+        <label>Selling price per cookie</label>
+        <input type="number" id="sellingPrice" value="0" min="0" step="1" oninput="saveAndRecalc()" />
+        <span class="unit">₱</span>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="slabel">Results</div>
+    <div class="results-grid">
+      <div class="metric"><div class="metric-label">Cost per batch</div><div class="metric-value" id="r-batchCost">₱0</div></div>
+      <div class="metric"><div class="metric-label">Cost per cookie</div><div class="metric-value" id="r-unitCost">₱0</div></div>
+      <div class="metric"><div class="metric-label">Revenue per batch</div><div class="metric-value" id="r-revenue">₱0</div></div>
+      <div class="metric"><div class="metric-label">Profit per batch</div><div class="metric-value" id="r-profit">₱0</div></div>
+      <div class="metric"><div class="metric-label">Margin</div><div class="metric-value" id="r-margin">0%</div></div>
+    </div>
+
+    <div class="breakdown">
+      <div class="brow"><span>Ingredients total</span><span class="bval" id="b-ing">₱0</span></div>
+      <div class="brow"><span>Packaging</span><span class="bval" id="b-pkg">₱0</span></div>
+      <div class="brow"><span>Labor & overhead</span><span class="bval" id="b-lab">₱0</span></div>
+      <div class="brow"><span>Delivery / misc</span><span class="bval" id="b-del">₱0</span></div>
+      <div class="brow total"><span>Total batch cost</span><span class="bval" id="b-total">₱0</span></div>
+    </div>
+
+    <div class="verdict" id="verdict"></div>
   </div>
 
-  <hr class="divider">
-
-  <div class="section-label">Results</div>
-
-  <div class="results-grid">
-    <div class="metric">
-      <div class="metric-label">Cost per batch</div>
-      <div class="metric-value" id="r-batchCost">₱0</div>
-    </div>
-    <div class="metric">
-      <div class="metric-label">Cost per piece</div>
-      <div class="metric-value" id="r-unitCost">₱0</div>
-    </div>
-    <div class="metric">
-      <div class="metric-label">Revenue per batch</div>
-      <div class="metric-value" id="r-revenue">₱0</div>
-    </div>
-    <div class="metric">
-      <div class="metric-label">Profit per batch</div>
-      <div class="metric-value" id="r-profit">₱0</div>
-    </div>
-    <div class="metric">
-      <div class="metric-label">Margin</div>
-      <div class="metric-value" id="r-margin">0%</div>
+  <div id="emptyState" style="display:none">
+    <div class="empty-state">
+      <p>No products yet. Create your first one to get started.</p>
+      <button onclick="openNewModal()">+ Create first product</button>
     </div>
   </div>
-
-  <div class="breakdown">
-    <div class="breakdown-row"><span>Ingredients total</span><span class="bval" id="b-ing">₱0</span></div>
-    <div class="breakdown-row"><span>Packaging</span><span class="bval" id="b-pkg">₱0</span></div>
-    <div class="breakdown-row"><span>Delivery / misc</span><span class="bval" id="b-del">₱0</span></div>
-    <div class="breakdown-row"><span>Labor</span><span class="bval" id="b-lab">₱0</span></div>
-    <div class="breakdown-row total"><span>Total batch cost</span><span class="bval" id="b-total">₱0</span></div>
-  </div>
-
-  <div class="verdict" id="verdict"></div>
 
   <div class="footer">
-    <span>Sinful Succulence &middot; Internal tool</span>
-    <button class="reset-btn" onclick="resetAll()">Reset</button>
+    <span>Sinful Succulence &middot; Internal tool &middot; Data saved in your browser</span>
   </div>
+</div>
 
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h2>New product</h2>
+    <input type="text" id="newProductName" placeholder="e.g. Velvet Dipped Classic…" onkeydown="if(event.key==='Enter')confirmNewProduct()" />
+    <div class="modal-actions">
+      <button onclick="closeModal()">Cancel</button>
+      <button class="primary" onclick="confirmNewProduct()">Create</button>
+    </div>
+  </div>
 </div>
 
 <script>
-let ingredients = [
-  {name:'Butter', qty:250, unit:'g', cost:120},
-  {name:'Chocolate chips', qty:200, unit:'g', cost:95},
-  {name:'Cake flour', qty:300, unit:'g', cost:45},
-  {name:'Sugar', qty:150, unit:'g', cost:30},
-];
+const STORE_KEY = 'ss_calc_v3';
+let data = { products: [], activeId: null };
 
-function fmt(n) { return '₱' + Math.round(n).toLocaleString(); }
-function pct(n) { return Math.round(n) + '%'; }
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) { data = JSON.parse(raw); }
+    else { data = { products: [], activeId: null }; }
+  } catch(e) { data = { products: [], activeId: null }; }
+}
+
+function saveData() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); flashSaved(); } catch(e) {}
+}
+
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+function activeProduct() { return data.products.find(p => p.id === data.activeId) || null; }
+
+let saveTimer;
+function flashSaved() {
+  const el = document.getElementById('saveIndicator');
+  el.textContent = 'Saved'; el.className = 'save-indicator saved';
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { el.textContent = 'All changes saved'; el.className = 'save-indicator'; }, 1500);
+}
+
+function renderSelect() {
+  const sel = document.getElementById('productSelect');
+  sel.innerHTML = '';
+  data.products.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.id; opt.textContent = p.name || 'Untitled product';
+    if (p.id === data.activeId) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  const del = document.getElementById('deleteBtn');
+  del.style.opacity = data.products.length <= 1 ? '0.3' : '1';
+  del.style.pointerEvents = data.products.length <= 1 ? 'none' : 'auto';
+}
+
+function showEmptyState(empty) {
+  document.getElementById('mainContent').style.display = empty ? 'none' : 'block';
+  document.getElementById('emptyState').style.display = empty ? 'block' : 'none';
+  document.getElementById('productSelect').style.display = empty ? 'none' : '';
+  document.getElementById('deleteBtn').style.display = empty ? 'none' : '';
+  document.getElementById('saveIndicator').style.display = empty ? 'none' : '';
+}
+
+function loadProductUI() {
+  const p = activeProduct();
+  if (!p) { showEmptyState(true); return; }
+  showEmptyState(false);
+  document.getElementById('productName').value = p.name || '';
+  document.getElementById('batchSize').value = p.batchSize || 12;
+  document.getElementById('packagingCost').value = p.packagingCost || 0;
+  document.getElementById('laborCost').value = p.laborCost || 0;
+  document.getElementById('deliveryCost').value = p.deliveryCost || 0;
+  document.getElementById('sellingPrice').value = p.sellingPrice || 0;
+  renderIngredients();
+}
+
+function switchProduct(id) {
+  data.activeId = id; saveData(); renderSelect(); loadProductUI();
+}
+
+function renameProduct(val) {
+  const p = activeProduct(); if (!p) return;
+  p.name = val; saveData();
+  const opt = document.getElementById('productSelect').querySelector('option[value="' + p.id + '"]');
+  if (opt) opt.textContent = val || 'Untitled product';
+}
+
+function openNewModal() {
+  document.getElementById('newProductName').value = '';
+  document.getElementById('modalOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('newProductName').focus(), 50);
+}
+
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+
+function confirmNewProduct() {
+  const name = document.getElementById('newProductName').value.trim() || 'New product';
+  const id = uid();
+  data.products.push({ id, name, batchSize:12, ingredients:[], packagingCost:0, laborCost:0, deliveryCost:0, sellingPrice:0 });
+  data.activeId = id; saveData(); closeModal(); renderSelect(); loadProductUI();
+}
+
+function deleteProduct() {
+  if (data.products.length <= 1) return;
+  const p = activeProduct(); if (!p) return;
+  if (!confirm('Delete "' + (p.name || 'this product') + '"? This cannot be undone.')) return;
+  data.products = data.products.filter(x => x.id !== data.activeId);
+  data.activeId = data.products[0].id; saveData(); renderSelect(); loadProductUI();
+}
+
+function cpg(ing) { const ps=parseFloat(ing.packSize)||0,pc=parseFloat(ing.packCost)||0; return ps?pc/ps:0; }
+function batchCost(ing) { return cpg(ing)*(parseFloat(ing.amount)||0); }
+function fmt(n) { return '₱'+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+function fmtR(n) { return '₱'+Math.round(n).toLocaleString(); }
+function pct(n) { return Math.round(n)+'%'; }
+function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 function renderIngredients() {
+  const p = activeProduct(); if (!p) return;
   const tbody = document.getElementById('ingBody');
   tbody.innerHTML = '';
-  ingredients.forEach((ing, i) => {
+  p.ingredients.forEach((ing, i) => {
+    const rate = cpg(ing), bc = batchCost(ing);
     const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td class="ing-col-name"><input class="ing-input" type="text" value="${ing.name}" placeholder="Ingredient" oninput="ingredients[${i}].name=this.value"></td>
-      <td class="ing-col-qty"><input class="ing-input right" type="number" value="${ing.qty}" min="0" step="any" oninput="ingredients[${i}].qty=parseFloat(this.value)||0;recalc()"></td>
-      <td class="ing-col-unit"><input class="ing-input" type="text" value="${ing.unit}" placeholder="g/ml/pc" oninput="ingredients[${i}].unit=this.value"></td>
-      <td class="ing-col-cost"><input class="ing-input right" type="number" value="${ing.cost}" min="0" step="any" placeholder="0" oninput="ingredients[${i}].cost=parseFloat(this.value)||0;recalc()"></td>
-      <td><button class="remove-btn" onclick="removeIngredient(${i})">×</button></td>
-    `;
+    tr.innerHTML =
+      '<td><input class="fi" type="text" value="'+escHtml(ing.name)+'" placeholder="Ingredient" oninput="ingSet('+i+',\'name\',this.value)" style="min-width:100px"></td>'+
+      '<td class="r"><input class="fi r" type="number" value="'+ing.packSize+'" min="0" step="any" oninput="ingSet('+i+',\'packSize\',this.value)" style="width:66px"></td>'+
+      '<td class="r"><input class="fi r" type="number" value="'+ing.packCost+'" min="0" step="any" oninput="ingSet('+i+',\'packCost\',this.value)" style="width:78px"></td>'+
+      '<td class="r"><input class="fi computed" id="cpg-'+i+'" readonly value="'+(rate>0?'₱'+rate.toFixed(4):'-')+'" style="width:72px"></td>'+
+      '<td class="r"><input class="fi r" type="number" value="'+ing.amount+'" min="0" step="any" oninput="ingSet('+i+',\'amount\',this.value)" style="width:70px"></td>'+
+      '<td><input class="fi" type="text" value="'+escHtml(ing.unit)+'" placeholder="g/mL" oninput="ingSet('+i+',\'unit\',this.value)" style="width:42px"></td>'+
+      '<td class="r"><input class="fi computed" id="bc-'+i+'" readonly value="'+fmt(bc)+'" style="width:76px"></td>'+
+      '<td><input class="fi" type="text" value="'+escHtml(ing.notes)+'" placeholder="notes" oninput="ingSet('+i+',\'notes\',this.value)" style="width:80px"></td>'+
+      '<td><button class="remove-btn" onclick="removeIngredient('+i+')">×</button></td>';
     tbody.appendChild(tr);
   });
   recalc();
 }
 
+function ingSet(i, key, val) {
+  const p = activeProduct(); if (!p) return;
+  p.ingredients[i][key] = (key==='name'||key==='unit'||key==='notes') ? val : (parseFloat(val)||0);
+  const rate=cpg(p.ingredients[i]), bc=batchCost(p.ingredients[i]);
+  const cpgEl=document.getElementById('cpg-'+i), bcEl=document.getElementById('bc-'+i);
+  if (cpgEl) cpgEl.value = rate>0?'₱'+rate.toFixed(4):'-';
+  if (bcEl) bcEl.value = fmt(bc);
+  saveAndRecalc();
+}
+
 function addIngredient() {
-  ingredients.push({name:'', qty:0, unit:'g', cost:0});
-  renderIngredients();
-  const inputs = document.querySelectorAll('.ing-col-name input');
-  inputs[inputs.length - 1].focus();
+  const p = activeProduct(); if (!p) return;
+  p.ingredients.push({name:'',packSize:0,packCost:0,amount:0,unit:'g',notes:''});
+  saveData(); renderIngredients();
 }
 
 function removeIngredient(i) {
-  ingredients.splice(i, 1);
-  renderIngredients();
+  const p = activeProduct(); if (!p) return;
+  p.ingredients.splice(i,1); saveData(); renderIngredients();
+}
+
+function saveAndRecalc() {
+  const p = activeProduct(); if (!p) return;
+  p.batchSize     = parseInt(document.getElementById('batchSize').value)||12;
+  p.packagingCost = parseFloat(document.getElementById('packagingCost').value)||0;
+  p.laborCost     = parseFloat(document.getElementById('laborCost').value)||0;
+  p.deliveryCost  = parseFloat(document.getElementById('deliveryCost').value)||0;
+  p.sellingPrice  = parseFloat(document.getElementById('sellingPrice').value)||0;
+  saveData(); recalc();
 }
 
 function recalc() {
-  const ingTotal = ingredients.reduce((s, ing) => s + (ing.cost || 0), 0);
-  const pkg   = parseFloat(document.getElementById('packagingCost').value) || 0;
-  const del   = parseFloat(document.getElementById('deliveryCost').value)  || 0;
-  const lab   = parseFloat(document.getElementById('laborCost').value)     || 0;
-  const batch = Math.max(1, parseInt(document.getElementById('batchSize').value) || 1);
-  const price = parseFloat(document.getElementById('sellingPrice').value)  || 0;
+  const p = activeProduct(); if (!p) return;
+  const ingTotal = p.ingredients.reduce((s,ing)=>s+batchCost(ing),0);
+  const pkg=p.packagingCost||0, lab=p.laborCost||0, del=p.deliveryCost||0;
+  const batch=Math.max(1,p.batchSize||12), price=p.sellingPrice||0;
+  const totalCost=ingTotal+pkg+lab+del, unitCost=totalCost/batch;
+  const revenue=price*batch, profit=revenue-totalCost;
+  const margin=revenue>0?(profit/revenue)*100:0;
 
-  const totalCost = ingTotal + pkg + del + lab;
-  const unitCost  = totalCost / batch;
-  const revenue   = price * batch;
-  const profit    = revenue - totalCost;
-  const margin    = revenue > 0 ? (profit / revenue) * 100 : 0;
+  document.getElementById('foot-total').textContent=fmt(ingTotal);
+  document.getElementById('r-batchCost').textContent=fmtR(totalCost);
+  document.getElementById('r-unitCost').textContent=fmtR(unitCost);
+  document.getElementById('r-revenue').textContent=fmtR(revenue);
 
-  document.getElementById('r-batchCost').textContent = fmt(totalCost);
-  document.getElementById('r-unitCost').textContent  = fmt(unitCost);
-  document.getElementById('r-revenue').textContent   = fmt(revenue);
+  const profitEl=document.getElementById('r-profit');
+  profitEl.textContent=fmtR(profit);
+  profitEl.className='metric-value'+(profit>0?' good':profit<0?' bad':' warn');
 
-  const profitEl = document.getElementById('r-profit');
-  profitEl.textContent = fmt(profit);
-  profitEl.className = 'metric-value' + (profit > 0 ? ' good' : profit < 0 ? ' bad' : ' warn');
+  const marginEl=document.getElementById('r-margin');
+  marginEl.textContent=pct(margin);
+  marginEl.className='metric-value'+(margin>=50?' good':margin>=30?' warn':' bad');
 
-  const marginEl = document.getElementById('r-margin');
-  marginEl.textContent = pct(margin);
-  marginEl.className = 'metric-value' + (margin >= 50 ? ' good' : margin >= 30 ? ' warn' : ' bad');
+  document.getElementById('b-ing').textContent=fmtR(ingTotal);
+  document.getElementById('b-pkg').textContent=fmtR(pkg);
+  document.getElementById('b-lab').textContent=fmtR(lab);
+  document.getElementById('b-del').textContent=fmtR(del);
+  document.getElementById('b-total').textContent=fmtR(totalCost);
 
-  document.getElementById('b-ing').textContent   = fmt(ingTotal);
-  document.getElementById('b-pkg').textContent   = fmt(pkg);
-  document.getElementById('b-del').textContent   = fmt(del);
-  document.getElementById('b-lab').textContent   = fmt(lab);
-  document.getElementById('b-total').textContent = fmt(totalCost);
-
-  const vEl = document.getElementById('verdict');
-  if (price === 0) { vEl.style.display = 'none'; return; }
-  vEl.style.display = 'block';
-
-  if (margin >= 50) {
-    vEl.className = 'verdict good';
-    vEl.textContent = `Healthy margin at ${pct(margin)}. Your pricing is working well for a premium brand. Cost per piece is ${fmt(unitCost)}.`;
-  } else if (margin >= 30) {
-    vEl.className = 'verdict warn';
-    vEl.textContent = `Margin of ${pct(margin)} is workable but a little tight for a premium brand. Consider if costs can be trimmed or if pricing can nudge up. Cost per piece is ${fmt(unitCost)}.`;
-  } else if (margin >= 0) {
-    vEl.className = 'verdict warn';
-    vEl.textContent = `Margin of ${pct(margin)} is low. At ${fmt(unitCost)} cost per piece, your price of ${fmt(price)} leaves little room for growth. Review ingredient costs or adjust your selling price.`;
+  const vEl=document.getElementById('verdict');
+  if (price===0){vEl.style.display='none';return;}
+  vEl.style.display='block';
+  if (margin>=50){
+    vEl.className='verdict good';
+    vEl.textContent='Healthy margin at '+pct(margin)+'. Your pricing is working well for a premium brand. Cost per cookie is '+fmtR(unitCost)+'.';
+  } else if (margin>=30){
+    vEl.className='verdict warn';
+    vEl.textContent='Margin of '+pct(margin)+' is workable but a bit tight for a premium brand. Consider trimming costs or nudging your price up. Cost per cookie is '+fmtR(unitCost)+'.';
+  } else if (margin>=0){
+    vEl.className='verdict warn';
+    vEl.textContent='Margin of '+pct(margin)+' is low. At '+fmtR(unitCost)+' cost per cookie, your price of ₱'+price+' leaves little room. Review ingredient costs or adjust your selling price.';
   } else {
-    vEl.className = 'verdict bad';
-    vEl.textContent = `You're losing ${fmt(Math.abs(profit))} per batch at this price. Cost per piece (${fmt(unitCost)}) exceeds your selling price. Adjust before taking orders at this rate.`;
+    vEl.className='verdict bad';
+    vEl.textContent='You\'re losing '+fmtR(Math.abs(profit))+' per batch at this price. Cost per cookie ('+fmtR(unitCost)+') exceeds your selling price. Adjust before taking orders at this rate.';
   }
 }
 
-function resetAll() {
-  if (!confirm('Reset everything to defaults?')) return;
-  ingredients = [
-    {name:'Butter', qty:250, unit:'g', cost:120},
-    {name:'Chocolate chips', qty:200, unit:'g', cost:95},
-    {name:'Cake flour', qty:300, unit:'g', cost:45},
-    {name:'Sugar', qty:150, unit:'g', cost:30},
-  ];
-  document.getElementById('productName').value = '';
-  document.getElementById('packagingCost').value = 0;
-  document.getElementById('deliveryCost').value = 0;
-  document.getElementById('laborCost').value = 0;
-  document.getElementById('batchSize').value = 12;
-  document.getElementById('sellingPrice').value = 0;
-  renderIngredients();
-}
+document.getElementById('modalOverlay').addEventListener('click', function(e){ if(e.target===this)closeModal(); });
 
-renderIngredients();
+loadData();
+if (data.products.length > 0) {
+  if (!data.activeId) data.activeId = data.products[0].id;
+  renderSelect(); loadProductUI();
+} else { showEmptyState(true); }
 </script>
 </body>
 </html>
