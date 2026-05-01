@@ -36,7 +36,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .header h1{font-family:var(--font-serif);font-size:22px;font-weight:400;color:var(--header);letter-spacing:0.01em}
 .header p{font-family:var(--font-serif);font-size:13px;font-style:italic;color:var(--text2);margin-left:20px;margin-top:2px}
 
-.slabel{font-family:var(--font-body);font-size:10px;font-weight:400;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:9px}
+.slabel{font-family:var(--font-body);font-size:10px;font-weight:400;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:9px;display:inline-block}
+.slabel-row{display:flex;align-items:center;gap:0;margin-bottom:9px}
+.slabel-row .slabel{margin-bottom:0}
+.manage-link{font-size:10px;color:var(--accent);background:none;border:none;cursor:pointer;font-family:var(--font-body);letter-spacing:0.08em;text-transform:uppercase;padding:0 0 0 10px;opacity:0.8;transition:opacity .15s}
+.manage-link:hover{opacity:1}
 
 .product-bar{display:flex;align-items:center;gap:8px;margin-bottom:1.75rem;flex-wrap:wrap}
 .product-select{flex:1;min-width:180px;border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:14px;font-family:var(--font-serif);font-weight:400;color:var(--header);background:var(--bg2);outline:none;cursor:pointer;transition:border-color .15s}
@@ -62,7 +66,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .batch-row .unit{font-size:13px;color:var(--text3)}
 
 .ing-wrap{margin-bottom:1.5rem;overflow-x:auto}
-.ing-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px;min-width:620px}
+.ing-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px;min-width:640px}
 .ing-table th{color:var(--text3);font-weight:300;text-align:left;padding:4px 5px 9px;border-bottom:0.5px solid var(--border);white-space:nowrap;font-size:11px;letter-spacing:0.04em;text-transform:uppercase}
 .ing-table th.r,.ing-table td.r{text-align:right}
 .ing-table td{padding:3px 3px;vertical-align:middle}
@@ -74,6 +78,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .fi.r{text-align:right}
 .fi.computed{color:var(--text3);background:var(--bg3);border-color:var(--border);cursor:default;font-size:12px;text-align:right;padding:5px 7px;border-radius:var(--r)}
 
+.ing-select{width:100%;border:0.5px solid transparent;border-radius:var(--r);padding:5px 7px;font-size:13px;font-family:var(--font-body);font-weight:300;color:var(--text);background:transparent;outline:none;transition:border-color .15s,background .15s;cursor:pointer;appearance:none;-webkit-appearance:none}
+.ing-select:focus{border-color:var(--border2);background:var(--bg2)}
+.ing-select.unset{color:var(--text3)}
+.ing-select option{background:var(--bg2);color:var(--header)}
+
 .remove-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;line-height:1;padding:2px 5px;border-radius:4px;transition:color .15s,background .15s;display:block;margin:0 auto}
 .remove-btn:hover{color:var(--red-text);background:var(--red-bg)}
 .add-btn{width:100%;border:0.5px dashed var(--border2);background:none;border-radius:var(--r);padding:8px;font-size:13px;font-family:var(--font-body);color:var(--text3);cursor:pointer;transition:background .15s,color .15s;margin-bottom:1.5rem}
@@ -82,13 +91,12 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .ing-hint{font-size:11px;font-family:var(--font-serif);font-style:italic;color:var(--text3);margin-top:4px;margin-bottom:12px;line-height:1.6}
 .ing-hint code{background:var(--bg3);border:0.5px solid var(--border);border-radius:4px;padding:1px 5px;font-size:11px;font-family:var(--font-body);font-style:normal}
 
-.costs-wrap{margin-bottom:1.5rem}
-.input-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
-.input-row label{font-size:13px;color:var(--text2);flex:1;font-weight:300}
-.input-row input{width:88px;border:0.5px solid var(--border2);border-radius:var(--r);padding:5px 8px;font-size:13px;font-family:var(--font-body);text-align:right;color:var(--text);background:var(--bg2);outline:none;transition:border-color .15s}
-.input-row input:focus{border-color:var(--accent)}
-.input-row .unit{font-size:13px;color:var(--text3);width:16px}
-.pkg-hint{font-size:11px;font-family:var(--font-serif);font-style:italic;color:var(--text3);margin-top:-2px;margin-bottom:12px;line-height:1.5}
+.costs-wrap{margin-bottom:1.5rem;overflow-x:auto}
+.cost-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px;min-width:360px}
+.cost-table th{color:var(--text3);font-weight:300;text-align:left;padding:4px 5px 9px;border-bottom:0.5px solid var(--border);white-space:nowrap;font-size:11px;letter-spacing:0.04em;text-transform:uppercase}
+.cost-table th.r,.cost-table td.r{text-align:right}
+.cost-table td{padding:3px 3px;vertical-align:middle}
+.cost-table tbody tr:not(:last-child) td{border-bottom:0.5px solid var(--border)}
 
 .divider{border:none;border-top:0.5px solid var(--border);margin:1.5rem 0}
 
@@ -126,6 +134,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .empty-state button{border:0.5px solid var(--accent);border-radius:var(--r);padding:9px 22px;font-size:13px;font-family:var(--font-body);color:var(--accent);background:var(--accent-bg);cursor:pointer;transition:background .15s,color .15s}
 .empty-state button:hover{background:var(--accent);color:#fff5ea}
 
+/* Library modals */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:100;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex}
 .modal{background:var(--bg2);border-radius:var(--rl);border:0.5px solid var(--border2);padding:1.75rem;width:340px;max-width:90vw}
@@ -138,6 +147,20 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .modal-actions button:hover{background:var(--bg3)}
 .modal-actions button.primary{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
 .modal-actions button.primary:hover{background:var(--accent);color:#fff5ea}
+
+.lib-modal{width:720px;max-width:95vw;display:flex;flex-direction:column;max-height:85vh}
+.lib-modal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem}
+.lib-modal-top h2{font-family:var(--font-serif);font-size:17px;font-weight:400;color:var(--header);margin:0}
+.lib-modal-body{flex:1;overflow-y:auto;overflow-x:auto;margin-bottom:1rem;min-height:80px}
+.lib-table{width:100%;border-collapse:collapse;font-size:13px}
+.lib-table th{color:var(--text3);font-weight:300;text-align:left;padding:4px 5px 9px;border-bottom:0.5px solid var(--border);white-space:nowrap;font-size:11px;letter-spacing:0.04em;text-transform:uppercase;position:sticky;top:0;background:var(--bg2)}
+.lib-table th.r,.lib-table td.r{text-align:right}
+.lib-table td{padding:3px 3px;vertical-align:middle}
+.lib-table tbody tr:not(:last-child) td{border-bottom:0.5px solid var(--border)}
+.lib-empty{text-align:center;padding:2.5rem 1rem;font-family:var(--font-serif);font-style:italic;color:var(--text3);font-size:13px}
+.lib-action-btn{background:none;border:0.5px solid var(--border2);border-radius:4px;cursor:pointer;color:var(--text3);font-size:12px;padding:3px 8px;font-family:var(--font-body);transition:color .15s,background .15s,border-color .15s;white-space:nowrap}
+.lib-action-btn:hover{background:var(--bg3);color:var(--text2)}
+.lib-action-btn.del:hover{background:var(--red-bg);color:var(--red-text);border-color:var(--red-val)}
 
 .footer{margin-top:2.5rem;padding-top:1rem;border-top:0.5px solid var(--border);font-size:12px;font-family:var(--font-serif);font-style:italic;color:var(--text3);display:flex;justify-content:space-between;align-items:center}
 </style>
@@ -170,11 +193,14 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
     </div>
 
     <div class="ing-wrap">
-      <div class="slabel">Ingredients</div>
+      <div class="slabel-row">
+        <span class="slabel">Ingredients</span>
+        <button class="manage-link" onclick="openIngLib()">Manage library</button>
+      </div>
       <table class="ing-table">
         <thead>
           <tr>
-            <th style="min-width:110px">Ingredient</th>
+            <th style="min-width:140px">Ingredient</th>
             <th class="r" style="width:72px">Pack size</th>
             <th class="r" style="width:88px">Pack cost (₱)</th>
             <th class="r" style="width:78px">Cost / unit</th>
@@ -195,29 +221,27 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
         </tfoot>
       </table>
       <div class="ing-hint">
-        Enter <code>pack size</code> + <code>pack cost</code> → <code>cost / unit</code> auto-calculates. Enter <code>amount needed</code> → <code>batch cost</code> auto-calculates.
+        Select from your ingredient library → pack size, cost, and unit fill in automatically. Enter <code>amount needed</code> to calculate batch cost.
       </div>
-      <button class="add-btn" onclick="addIngredient()">+ add ingredient</button>
+      <button class="add-btn" onclick="addIngredient()">+ add ingredient row</button>
     </div>
 
     <div class="costs-wrap">
-      <div class="slabel">Other costs per batch</div>
-      <div class="input-row">
-        <label>Packaging (boxes, stickers, inserts, ribbon…)</label>
-        <input type="number" id="packagingCost" value="0" min="0" step="1" oninput="saveAndRecalc()" />
-        <span class="unit">₱</span>
+      <div class="slabel-row">
+        <span class="slabel">Other costs per batch</span>
+        <button class="manage-link" onclick="openCostsLib()">Manage library</button>
       </div>
-      <p class="pkg-hint">Refer to your packaging sheets per variant to get this number, then enter the total here.</p>
-      <div class="input-row">
-        <label>Labor & overhead (batter, baking, electricity, cleaning…)</label>
-        <input type="number" id="laborCost" value="0" min="0" step="1" oninput="saveAndRecalc()" />
-        <span class="unit">₱</span>
-      </div>
-      <div class="input-row">
-        <label>Delivery / gas / misc</label>
-        <input type="number" id="deliveryCost" value="0" min="0" step="1" oninput="saveAndRecalc()" />
-        <span class="unit">₱</span>
-      </div>
+      <table class="cost-table">
+        <thead>
+          <tr>
+            <th style="min-width:180px">Cost item</th>
+            <th class="r" style="width:110px">Amount (₱)</th>
+            <th style="width:28px"></th>
+          </tr>
+        </thead>
+        <tbody id="costsBody"></tbody>
+      </table>
+      <button class="add-btn" onclick="addCostRow()">+ add cost row</button>
     </div>
 
     <hr class="divider">
@@ -244,9 +268,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 
     <div class="breakdown">
       <div class="brow"><span>Ingredients total</span><span class="bval" id="b-ing">₱0</span></div>
-      <div class="brow"><span>Packaging</span><span class="bval" id="b-pkg">₱0</span></div>
-      <div class="brow"><span>Labor & overhead</span><span class="bval" id="b-lab">₱0</span></div>
-      <div class="brow"><span>Delivery / misc</span><span class="bval" id="b-del">₱0</span></div>
+      <div id="b-costs-body"></div>
       <div class="brow total"><span>Total batch cost</span><span class="bval" id="b-total">₱0</span></div>
     </div>
 
@@ -265,6 +287,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
   </div>
 </div>
 
+<!-- New product modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h2>New product</h2>
@@ -276,24 +299,107 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
   </div>
 </div>
 
+<!-- Ingredient library modal -->
+<div class="modal-overlay" id="ingLibOverlay">
+  <div class="modal lib-modal">
+    <div class="lib-modal-top">
+      <h2>Ingredient Library</h2>
+      <button class="bar-btn accent" onclick="addIngLibItem()">+ Add New</button>
+    </div>
+    <div class="lib-modal-body" id="ingLibBody"></div>
+    <div class="modal-actions">
+      <button onclick="closeIngLib()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- Other costs library modal -->
+<div class="modal-overlay" id="costsLibOverlay">
+  <div class="modal lib-modal" style="width:420px">
+    <div class="lib-modal-top">
+      <h2>Other Costs Library</h2>
+      <button class="bar-btn accent" onclick="addCostsLibItem()">+ Add New</button>
+    </div>
+    <div class="lib-modal-body" id="costsLibBody"></div>
+    <div class="modal-actions">
+      <button onclick="closeCostsLib()">Done</button>
+    </div>
+  </div>
+</div>
+
 <script>
-const STORE_KEY = 'ss_calc_v3';
-let data = { products: [], activeId: null };
+// ── Storage keys ────────────────────────────────────────────────────────────
+const STORE_KEY     = 'ss_calc_v3';
+const ING_LIB_KEY   = 'ss_ing_lib_v1';
+const COSTS_LIB_KEY = 'ss_costs_lib_v1';
 
+let data     = { products: [], activeId: null };
+let ingLib   = { items: [] };  // { id, name, packSize, packCost, unit }
+let costsLib = { items: [] };  // { id, name }
+
+// ── Load / Save ──────────────────────────────────────────────────────────────
 function loadData() {
-  try {
-    const raw = localStorage.getItem(STORE_KEY);
-    if (raw) { data = JSON.parse(raw); }
-    else { data = { products: [], activeId: null }; }
-  } catch(e) { data = { products: [], activeId: null }; }
+  try { const r = localStorage.getItem(STORE_KEY);     data     = r ? JSON.parse(r) : { products:[], activeId:null }; } catch(e) { data = { products:[], activeId:null }; }
+  try { const r = localStorage.getItem(ING_LIB_KEY);   ingLib   = r ? JSON.parse(r) : { items:[] }; } catch(e) { ingLib = { items:[] }; }
+  try { const r = localStorage.getItem(COSTS_LIB_KEY); costsLib = r ? JSON.parse(r) : { items:[] }; } catch(e) { costsLib = { items:[] }; }
+  data.products.forEach(migrateProduct);
 }
 
-function saveData() {
-  try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); flashSaved(); } catch(e) {}
+function saveData()     { try { localStorage.setItem(STORE_KEY,     JSON.stringify(data));     flashSaved(); } catch(e) {} }
+function saveIngLib()   { try { localStorage.setItem(ING_LIB_KEY,   JSON.stringify(ingLib));   } catch(e) {} }
+function saveCostsLib() { try { localStorage.setItem(COSTS_LIB_KEY, JSON.stringify(costsLib)); } catch(e) {} }
+
+// ── Migration: upgrade old product format ────────────────────────────────────
+function migrateProduct(p) {
+  // Migrate old ingredient rows (had name/packSize/packCost/unit inline, no libId)
+  p.ingredients = (p.ingredients || []).map(ing => {
+    if (ing.libId) return ing;
+    if (!ing.name) return { libId:'', amount: ing.amount||0, notes: ing.notes||'' };
+    const libId = ensureIngLibItem(ing.name, ing.packSize, ing.packCost, ing.unit);
+    return { libId, amount: ing.amount||0, notes: ing.notes||'' };
+  });
+  // Migrate old fixed cost fields into dynamic costs array
+  if (!p.costs) {
+    p.costs = [];
+    if ((p.packagingCost||0) > 0) p.costs.push({ libId: ensureCostLibItem('Packaging'),        amount: p.packagingCost });
+    if ((p.laborCost||0)    > 0) p.costs.push({ libId: ensureCostLibItem('Labor & Overhead'),  amount: p.laborCost    });
+    if ((p.deliveryCost||0) > 0) p.costs.push({ libId: ensureCostLibItem('Delivery / Misc'),   amount: p.deliveryCost });
+    delete p.packagingCost; delete p.laborCost; delete p.deliveryCost;
+  }
 }
 
-function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+function ensureIngLibItem(name, packSize, packCost, unit) {
+  let item = ingLib.items.find(i => i.name.toLowerCase() === (name||'').toLowerCase());
+  if (!item) {
+    item = { id: uid(), name: name||'', packSize: parseFloat(packSize)||0, packCost: parseFloat(packCost)||0, unit: unit||'g' };
+    ingLib.items.push(item);
+    saveIngLib();
+  }
+  return item.id;
+}
+
+function ensureCostLibItem(name) {
+  let item = costsLib.items.find(i => i.name.toLowerCase() === (name||'').toLowerCase());
+  if (!item) {
+    item = { id: uid(), name: name||'' };
+    costsLib.items.push(item);
+    saveCostsLib();
+  }
+  return item.id;
+}
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function uid()           { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
 function activeProduct() { return data.products.find(p => p.id === data.activeId) || null; }
+function ingLibSorted()   { return [...ingLib.items].sort((a,b)   => (a.name||'').localeCompare(b.name||'')); }
+function costsLibSorted() { return [...costsLib.items].sort((a,b) => (a.name||'').localeCompare(b.name||'')); }
+
+function cpg(libItem)       { return (libItem && libItem.packSize) ? libItem.packCost / libItem.packSize : 0; }
+function ingBatchCost(ing)  { const li = ingLib.items.find(x => x.id === ing.libId); return cpg(li) * (parseFloat(ing.amount)||0); }
+function fmt(n)             { return '₱'+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+function fmtR(n)            { return '₱'+Math.round(n).toLocaleString(); }
+function pct(n)             { return Math.round(n)+'%'; }
+function escHtml(s)         { return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 let saveTimer;
 function flashSaved() {
@@ -303,6 +409,7 @@ function flashSaved() {
   saveTimer = setTimeout(() => { el.textContent = 'All changes saved'; el.className = 'save-indicator'; }, 1500);
 }
 
+// ── Product list ─────────────────────────────────────────────────────────────
 function renderSelect() {
   const sel = document.getElementById('productSelect');
   sel.innerHTML = '';
@@ -313,15 +420,15 @@ function renderSelect() {
     sel.appendChild(opt);
   });
   const del = document.getElementById('deleteBtn');
-  del.style.opacity = data.products.length <= 1 ? '0.3' : '1';
+  del.style.opacity       = data.products.length <= 1 ? '0.3' : '1';
   del.style.pointerEvents = data.products.length <= 1 ? 'none' : 'auto';
 }
 
 function showEmptyState(empty) {
-  document.getElementById('mainContent').style.display = empty ? 'none' : 'block';
-  document.getElementById('emptyState').style.display = empty ? 'block' : 'none';
+  document.getElementById('mainContent').style.display  = empty ? 'none' : 'block';
+  document.getElementById('emptyState').style.display   = empty ? 'block' : 'none';
   document.getElementById('productSelect').style.display = empty ? 'none' : '';
-  document.getElementById('deleteBtn').style.display = empty ? 'none' : '';
+  document.getElementById('deleteBtn').style.display     = empty ? 'none' : '';
   document.getElementById('saveIndicator').style.display = empty ? 'none' : '';
 }
 
@@ -329,23 +436,19 @@ function loadProductUI() {
   const p = activeProduct();
   if (!p) { showEmptyState(true); return; }
   showEmptyState(false);
-  document.getElementById('productName').value = p.name || '';
-  document.getElementById('batchSize').value = p.batchSize || 12;
-  document.getElementById('packagingCost').value = p.packagingCost || 0;
-  document.getElementById('laborCost').value = p.laborCost || 0;
-  document.getElementById('deliveryCost').value = p.deliveryCost || 0;
+  document.getElementById('productName').value  = p.name || '';
+  document.getElementById('batchSize').value    = p.batchSize || 12;
   document.getElementById('sellingPrice').value = p.sellingPrice || 0;
   renderIngredients();
+  renderCosts();
 }
 
-function switchProduct(id) {
-  data.activeId = id; saveData(); renderSelect(); loadProductUI();
-}
+function switchProduct(id) { data.activeId = id; saveData(); renderSelect(); loadProductUI(); }
 
 function renameProduct(val) {
   const p = activeProduct(); if (!p) return;
   p.name = val; saveData();
-  const opt = document.getElementById('productSelect').querySelector('option[value="' + p.id + '"]');
+  const opt = document.getElementById('productSelect').querySelector('option[value="'+p.id+'"]');
   if (opt) opt.textContent = val || 'Untitled product';
 }
 
@@ -354,13 +457,12 @@ function openNewModal() {
   document.getElementById('modalOverlay').classList.add('open');
   setTimeout(() => document.getElementById('newProductName').focus(), 50);
 }
-
 function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
 
 function confirmNewProduct() {
   const name = document.getElementById('newProductName').value.trim() || 'New product';
   const id = uid();
-  data.products.push({ id, name, batchSize:12, ingredients:[], packagingCost:0, laborCost:0, deliveryCost:0, sellingPrice:0 });
+  data.products.push({ id, name, batchSize:12, ingredients:[], costs:[], sellingPrice:0 });
   data.activeId = id; saveData(); closeModal(); renderSelect(); loadProductUI();
 }
 
@@ -368,123 +470,334 @@ function deleteProduct() {
   if (data.products.length <= 1) return;
   const p = activeProduct(); if (!p) return;
   if (!confirm('Delete "' + (p.name || 'this product') + '"? This cannot be undone.')) return;
-  data.products = data.products.filter(x => x.id !== data.activeId);
-  data.activeId = data.products[0].id; saveData(); renderSelect(); loadProductUI();
+  data.products  = data.products.filter(x => x.id !== data.activeId);
+  data.activeId  = data.products[0].id;
+  saveData(); renderSelect(); loadProductUI();
 }
 
-function cpg(ing) { const ps=parseFloat(ing.packSize)||0,pc=parseFloat(ing.packCost)||0; return ps?pc/ps:0; }
-function batchCost(ing) { return cpg(ing)*(parseFloat(ing.amount)||0); }
-function fmt(n) { return '₱'+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
-function fmtR(n) { return '₱'+Math.round(n).toLocaleString(); }
-function pct(n) { return Math.round(n)+'%'; }
-function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+// ── Ingredient dropdown helpers ───────────────────────────────────────────────
+function renderIngOptions(selectedId) {
+  let html = '<option value="">— select ingredient —</option>';
+  ingLibSorted().forEach(item => {
+    html += '<option value="'+item.id+'"'+(item.id===selectedId?' selected':'')+'>'+escHtml(item.name)+'</option>';
+  });
+  return html;
+}
 
+// ── Product ingredient rows ───────────────────────────────────────────────────
 function renderIngredients() {
   const p = activeProduct(); if (!p) return;
   const tbody = document.getElementById('ingBody');
   tbody.innerHTML = '';
-  p.ingredients.forEach((ing, i) => {
-    const rate = cpg(ing), bc = batchCost(ing);
-    const tr = document.createElement('tr');
+  (p.ingredients||[]).forEach((ing, i) => {
+    const li  = ingLib.items.find(x => x.id === ing.libId) || null;
+    const rate = cpg(li);
+    const bc   = rate * (parseFloat(ing.amount)||0);
+    const tr   = document.createElement('tr');
     tr.innerHTML =
-      '<td><input class="fi" type="text" value="'+escHtml(ing.name)+'" placeholder="Ingredient" oninput="ingSet('+i+',\'name\',this.value)" style="min-width:100px"></td>'+
-      '<td class="r"><input class="fi r" type="number" value="'+ing.packSize+'" min="0" step="any" oninput="ingSet('+i+',\'packSize\',this.value)" style="width:66px"></td>'+
-      '<td class="r"><input class="fi r" type="number" value="'+ing.packCost+'" min="0" step="any" oninput="ingSet('+i+',\'packCost\',this.value)" style="width:78px"></td>'+
-      '<td class="r"><input class="fi computed" id="cpg-'+i+'" readonly value="'+(rate>0?'₱'+rate.toFixed(4):'-')+'" style="width:72px"></td>'+
-      '<td class="r"><input class="fi r" type="number" value="'+ing.amount+'" min="0" step="any" oninput="ingSet('+i+',\'amount\',this.value)" style="width:70px"></td>'+
-      '<td><input class="fi" type="text" value="'+escHtml(ing.unit)+'" placeholder="g/mL" oninput="ingSet('+i+',\'unit\',this.value)" style="width:42px"></td>'+
-      '<td class="r"><input class="fi computed" id="bc-'+i+'" readonly value="'+fmt(bc)+'" style="width:76px"></td>'+
-      '<td><input class="fi" type="text" value="'+escHtml(ing.notes)+'" placeholder="notes" oninput="ingSet('+i+',\'notes\',this.value)" style="width:80px"></td>'+
+      '<td><select class="ing-select'+(ing.libId?'':' unset')+'" onchange="ingSelectLib('+i+',this.value)">'+renderIngOptions(ing.libId)+'</select></td>'+
+      '<td class="r"><input class="fi computed" readonly value="'+(li ? li.packSize : '—')+'" style="width:66px"></td>'+
+      '<td class="r"><input class="fi computed" readonly value="'+(li ? '₱'+li.packCost : '—')+'" style="width:78px"></td>'+
+      '<td class="r"><input class="fi computed" id="cpg-'+i+'" readonly value="'+(rate>0 ? '₱'+rate.toFixed(4) : '—')+'" style="width:72px"></td>'+
+      '<td class="r"><input class="fi r" type="number" value="'+(ing.amount||'')+'" min="0" step="any" oninput="ingAmountSet('+i+',this.value)" style="width:70px"></td>'+
+      '<td><input class="fi computed" readonly value="'+(li ? escHtml(li.unit) : '—')+'" style="width:42px"></td>'+
+      '<td class="r"><input class="fi computed" id="bc-'+i+'" readonly value="'+(li ? fmt(bc) : '—')+'" style="width:76px"></td>'+
+      '<td><input class="fi" type="text" value="'+escHtml(ing.notes||'')+'" placeholder="notes" oninput="ingNotesSet('+i+',this.value)" style="width:80px"></td>'+
       '<td><button class="remove-btn" onclick="removeIngredient('+i+')">×</button></td>';
     tbody.appendChild(tr);
   });
   recalc();
 }
 
-function ingSet(i, key, val) {
+function ingSelectLib(i, libId) {
   const p = activeProduct(); if (!p) return;
-  p.ingredients[i][key] = (key==='name'||key==='unit'||key==='notes') ? val : (parseFloat(val)||0);
-  const rate=cpg(p.ingredients[i]), bc=batchCost(p.ingredients[i]);
-  const cpgEl=document.getElementById('cpg-'+i), bcEl=document.getElementById('bc-'+i);
-  if (cpgEl) cpgEl.value = rate>0?'₱'+rate.toFixed(4):'-';
-  if (bcEl) bcEl.value = fmt(bc);
+  p.ingredients[i].libId = libId;
+  saveData(); renderIngredients();
+}
+
+function ingAmountSet(i, val) {
+  const p = activeProduct(); if (!p) return;
+  p.ingredients[i].amount = parseFloat(val)||0;
+  const li = ingLib.items.find(x => x.id === p.ingredients[i].libId);
+  if (li) {
+    const rate = cpg(li);
+    const bc   = rate * (parseFloat(val)||0);
+    const bcEl = document.getElementById('bc-'+i);
+    if (bcEl) bcEl.value = fmt(bc);
+  }
   saveAndRecalc();
+}
+
+function ingNotesSet(i, val) {
+  const p = activeProduct(); if (!p) return;
+  p.ingredients[i].notes = val; saveData();
 }
 
 function addIngredient() {
   const p = activeProduct(); if (!p) return;
-  p.ingredients.push({name:'',packSize:0,packCost:0,amount:0,unit:'g',notes:''});
+  p.ingredients.push({ libId:'', amount:0, notes:'' });
   saveData(); renderIngredients();
 }
 
 function removeIngredient(i) {
   const p = activeProduct(); if (!p) return;
-  p.ingredients.splice(i,1); saveData(); renderIngredients();
+  p.ingredients.splice(i, 1); saveData(); renderIngredients();
 }
 
+// ── Product cost rows ─────────────────────────────────────────────────────────
+function renderCostOptions(selectedId) {
+  let html = '<option value="">— select cost —</option>';
+  costsLibSorted().forEach(item => {
+    html += '<option value="'+item.id+'"'+(item.id===selectedId?' selected':'')+'>'+escHtml(item.name)+'</option>';
+  });
+  return html;
+}
+
+function renderCosts() {
+  const p = activeProduct(); if (!p) return;
+  const tbody = document.getElementById('costsBody');
+  tbody.innerHTML = '';
+  (p.costs||[]).forEach((cost, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td><select class="ing-select'+(cost.libId?'':' unset')+'" onchange="costSelectLib('+i+',this.value)">'+renderCostOptions(cost.libId)+'</select></td>'+
+      '<td class="r"><input class="fi r" type="number" value="'+(cost.amount||'')+'" min="0" step="any" oninput="costAmountSet('+i+',this.value)" style="width:100px"></td>'+
+      '<td><button class="remove-btn" onclick="removeCostRow('+i+')">×</button></td>';
+    tbody.appendChild(tr);
+  });
+  recalc();
+}
+
+function addCostRow() {
+  const p = activeProduct(); if (!p) return;
+  if (!p.costs) p.costs = [];
+  p.costs.push({ libId:'', amount:0 });
+  saveData(); renderCosts();
+}
+
+function removeCostRow(i) {
+  const p = activeProduct(); if (!p) return;
+  p.costs.splice(i, 1); saveData(); renderCosts();
+}
+
+function costSelectLib(i, libId) {
+  const p = activeProduct(); if (!p) return;
+  p.costs[i].libId = libId; saveData(); recalc();
+}
+
+function costAmountSet(i, val) {
+  const p = activeProduct(); if (!p) return;
+  p.costs[i].amount = parseFloat(val)||0; saveAndRecalc();
+}
+
+// ── Core save / recalc ────────────────────────────────────────────────────────
 function saveAndRecalc() {
   const p = activeProduct(); if (!p) return;
-  p.batchSize     = parseInt(document.getElementById('batchSize').value)||12;
-  p.packagingCost = parseFloat(document.getElementById('packagingCost').value)||0;
-  p.laborCost     = parseFloat(document.getElementById('laborCost').value)||0;
-  p.deliveryCost  = parseFloat(document.getElementById('deliveryCost').value)||0;
-  p.sellingPrice  = parseFloat(document.getElementById('sellingPrice').value)||0;
+  p.batchSize    = parseInt(document.getElementById('batchSize').value)||12;
+  p.sellingPrice = parseFloat(document.getElementById('sellingPrice').value)||0;
   saveData(); recalc();
 }
 
 function recalc() {
   const p = activeProduct(); if (!p) return;
-  const ingTotal = p.ingredients.reduce((s,ing)=>s+batchCost(ing),0);
-  const pkg=p.packagingCost||0, lab=p.laborCost||0, del=p.deliveryCost||0;
-  const batch=Math.max(1,p.batchSize||12), price=p.sellingPrice||0;
-  const totalCost=ingTotal+pkg+lab+del, unitCost=totalCost/batch;
-  const revenue=price*batch, profit=revenue-totalCost;
-  const margin=revenue>0?(profit/revenue)*100:0;
 
-  document.getElementById('foot-total').textContent=fmt(ingTotal);
-  document.getElementById('r-batchCost').textContent=fmtR(totalCost);
-  document.getElementById('r-unitCost').textContent=fmtR(unitCost);
-  document.getElementById('r-revenue').textContent=fmtR(revenue);
+  const ingTotal   = (p.ingredients||[]).reduce((s, ing) => s + ingBatchCost(ing), 0);
+  const otherTotal = (p.costs||[]).reduce((s, c) => s + (parseFloat(c.amount)||0), 0);
+  const batch      = Math.max(1, p.batchSize||12);
+  const price      = p.sellingPrice||0;
+  const totalCost  = ingTotal + otherTotal;
+  const unitCost   = totalCost / batch;
+  const revenue    = price * batch;
+  const profit     = revenue - totalCost;
+  const margin     = revenue > 0 ? (profit / revenue) * 100 : 0;
 
-  const profitEl=document.getElementById('r-profit');
-  profitEl.textContent=fmtR(profit);
-  profitEl.className='metric-value'+(profit>0?' good':profit<0?' bad':' warn');
+  document.getElementById('foot-total').textContent = fmt(ingTotal);
+  document.getElementById('r-batchCost').textContent = fmtR(totalCost);
+  document.getElementById('r-unitCost').textContent  = fmtR(unitCost);
+  document.getElementById('r-revenue').textContent   = fmtR(revenue);
 
-  const marginEl=document.getElementById('r-margin');
-  marginEl.textContent=pct(margin);
-  marginEl.className='metric-value'+(margin>=50?' good':margin>=30?' warn':' bad');
+  const profitEl  = document.getElementById('r-profit');
+  profitEl.textContent = fmtR(profit);
+  profitEl.className   = 'metric-value'+(profit>0?' good':profit<0?' bad':' warn');
 
-  document.getElementById('b-ing').textContent=fmtR(ingTotal);
-  document.getElementById('b-pkg').textContent=fmtR(pkg);
-  document.getElementById('b-lab').textContent=fmtR(lab);
-  document.getElementById('b-del').textContent=fmtR(del);
-  document.getElementById('b-total').textContent=fmtR(totalCost);
+  const marginEl  = document.getElementById('r-margin');
+  marginEl.textContent = pct(margin);
+  marginEl.className   = 'metric-value'+(margin>=50?' good':margin>=30?' warn':' bad');
 
-  const vEl=document.getElementById('verdict');
-  if (price===0){vEl.style.display='none';return;}
-  vEl.style.display='block';
-  if (margin>=50){
-    vEl.className='verdict good';
-    vEl.textContent='Healthy margin at '+pct(margin)+'. Your pricing is working well for a premium brand. Cost per cookie is '+fmtR(unitCost)+'.';
-  } else if (margin>=30){
-    vEl.className='verdict warn';
-    vEl.textContent='Margin of '+pct(margin)+' is workable but a bit tight for a premium brand. Consider trimming costs or nudging your price up. Cost per cookie is '+fmtR(unitCost)+'.';
-  } else if (margin>=0){
-    vEl.className='verdict warn';
-    vEl.textContent='Margin of '+pct(margin)+' is low. At '+fmtR(unitCost)+' cost per cookie, your price of ₱'+price+' leaves little room. Review ingredient costs or adjust your selling price.';
+  document.getElementById('b-ing').textContent   = fmtR(ingTotal);
+
+  // Dynamic other-cost breakdown rows
+  const bcBody = document.getElementById('b-costs-body');
+  bcBody.innerHTML = '';
+  (p.costs||[]).forEach(c => {
+    const li   = costsLib.items.find(x => x.id === c.libId);
+    const name = li ? li.name : '(unnamed)';
+    const row  = document.createElement('div');
+    row.className = 'brow';
+    row.innerHTML = '<span>'+escHtml(name)+'</span><span class="bval">'+fmtR(c.amount||0)+'</span>';
+    bcBody.appendChild(row);
+  });
+
+  document.getElementById('b-total').textContent = fmtR(totalCost);
+
+  const vEl = document.getElementById('verdict');
+  if (price === 0) { vEl.style.display = 'none'; return; }
+  vEl.style.display = 'block';
+  if (margin >= 50) {
+    vEl.className   = 'verdict good';
+    vEl.textContent = 'Healthy margin at '+pct(margin)+'. Your pricing is working well for a premium brand. Cost per cookie is '+fmtR(unitCost)+'.';
+  } else if (margin >= 30) {
+    vEl.className   = 'verdict warn';
+    vEl.textContent = 'Margin of '+pct(margin)+' is workable but a bit tight for a premium brand. Consider trimming costs or nudging your price up. Cost per cookie is '+fmtR(unitCost)+'.';
+  } else if (margin >= 0) {
+    vEl.className   = 'verdict warn';
+    vEl.textContent = 'Margin of '+pct(margin)+' is low. At '+fmtR(unitCost)+' cost per cookie, your price of ₱'+price+' leaves little room. Review ingredient costs or adjust your selling price.';
   } else {
-    vEl.className='verdict bad';
-    vEl.textContent='You\'re losing '+fmtR(Math.abs(profit))+' per batch at this price. Cost per cookie ('+fmtR(unitCost)+') exceeds your selling price. Adjust before taking orders at this rate.';
+    vEl.className   = 'verdict bad';
+    vEl.textContent = 'You\'re losing '+fmtR(Math.abs(profit))+' per batch at this price. Cost per cookie ('+fmtR(unitCost)+') exceeds your selling price. Adjust before taking orders at this rate.';
   }
 }
 
-document.getElementById('modalOverlay').addEventListener('click', function(e){ if(e.target===this)closeModal(); });
+// ── Ingredient library modal ──────────────────────────────────────────────────
+function openIngLib()  { renderIngLib(); document.getElementById('ingLibOverlay').classList.add('open'); }
+function closeIngLib() { document.getElementById('ingLibOverlay').classList.remove('open'); renderIngredients(); }
 
+function renderIngLib() {
+  const body   = document.getElementById('ingLibBody');
+  const sorted = ingLibSorted();
+  if (sorted.length === 0) {
+    body.innerHTML = '<div class="lib-empty">No ingredients yet. Click "+ Add New" to create your first one.</div>';
+    return;
+  }
+  body.innerHTML =
+    '<table class="lib-table">'+
+      '<thead><tr>'+
+        '<th style="min-width:130px">Name</th>'+
+        '<th class="r" style="width:80px">Pack size</th>'+
+        '<th class="r" style="width:96px">Pack cost (₱)</th>'+
+        '<th style="width:58px">Unit</th>'+
+        '<th style="width:88px"></th>'+
+      '</tr></thead>'+
+      '<tbody id="ingLibTableBody"></tbody>'+
+    '</table>';
+
+  const tbody = document.getElementById('ingLibTableBody');
+  sorted.forEach(item => {
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td><input class="fi" type="text" value="'+escHtml(item.name)+'" placeholder="Name" oninput="ingLibSet(\''+item.id+'\',\'name\',this.value)" style="min-width:120px"></td>'+
+      '<td class="r"><input class="fi r" type="number" value="'+item.packSize+'" min="0" step="any" oninput="ingLibSet(\''+item.id+'\',\'packSize\',this.value)" style="width:72px"></td>'+
+      '<td class="r"><input class="fi r" type="number" value="'+item.packCost+'" min="0" step="any" oninput="ingLibSet(\''+item.id+'\',\'packCost\',this.value)" style="width:86px"></td>'+
+      '<td><input class="fi" type="text" value="'+escHtml(item.unit)+'" placeholder="g" oninput="ingLibSet(\''+item.id+'\',\'unit\',this.value)" style="width:50px"></td>'+
+      '<td><div style="display:flex;gap:4px">'+
+        '<button class="lib-action-btn" onclick="dupIngLibItem(\''+item.id+'\')" title="Duplicate">⧉ Dup</button>'+
+        '<button class="lib-action-btn del" onclick="delIngLibItem(\''+item.id+'\')" title="Delete">× Del</button>'+
+      '</div></td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function ingLibSet(id, key, val) {
+  const item = ingLib.items.find(x => x.id === id); if (!item) return;
+  item[key] = (key==='name'||key==='unit') ? val : (parseFloat(val)||0);
+  saveIngLib();
+}
+
+function addIngLibItem() {
+  ingLib.items.push({ id: uid(), name:'', packSize:0, packCost:0, unit:'g' });
+  saveIngLib(); renderIngLib();
+  setTimeout(() => {
+    const rows = document.querySelectorAll('#ingLibTableBody tr');
+    if (rows.length) { const inp = rows[rows.length-1].querySelector('input'); if (inp) inp.focus(); }
+  }, 50);
+}
+
+function dupIngLibItem(id) {
+  const src = ingLib.items.find(x => x.id === id); if (!src) return;
+  ingLib.items.push({ ...src, id: uid(), name: src.name+' (copy)' });
+  saveIngLib(); renderIngLib();
+}
+
+function delIngLibItem(id) {
+  const inUse = data.products.some(p => (p.ingredients||[]).some(ing => ing.libId === id));
+  if (inUse && !confirm('This ingredient is used in one or more products. Deleting it will unlink those rows. Continue?')) return;
+  ingLib.items = ingLib.items.filter(x => x.id !== id);
+  saveIngLib(); renderIngLib();
+}
+
+// ── Other costs library modal ─────────────────────────────────────────────────
+function openCostsLib()  { renderCostsLib(); document.getElementById('costsLibOverlay').classList.add('open'); }
+function closeCostsLib() { document.getElementById('costsLibOverlay').classList.remove('open'); renderCosts(); }
+
+function renderCostsLib() {
+  const body   = document.getElementById('costsLibBody');
+  const sorted = costsLibSorted();
+  if (sorted.length === 0) {
+    body.innerHTML = '<div class="lib-empty">No cost items yet. Click "+ Add New" to create one.</div>';
+    return;
+  }
+  body.innerHTML =
+    '<table class="lib-table">'+
+      '<thead><tr>'+
+        '<th style="min-width:200px">Name</th>'+
+        '<th style="width:88px"></th>'+
+      '</tr></thead>'+
+      '<tbody id="costsLibTableBody"></tbody>'+
+    '</table>';
+
+  const tbody = document.getElementById('costsLibTableBody');
+  sorted.forEach(item => {
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td><input class="fi" type="text" value="'+escHtml(item.name)+'" placeholder="Cost name" oninput="costsLibSet(\''+item.id+'\',\'name\',this.value)" style="min-width:180px"></td>'+
+      '<td><div style="display:flex;gap:4px">'+
+        '<button class="lib-action-btn" onclick="dupCostsLibItem(\''+item.id+'\')" title="Duplicate">⧉ Dup</button>'+
+        '<button class="lib-action-btn del" onclick="delCostsLibItem(\''+item.id+'\')" title="Delete">× Del</button>'+
+      '</div></td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function costsLibSet(id, key, val) {
+  const item = costsLib.items.find(x => x.id === id); if (!item) return;
+  item[key] = val; saveCostsLib();
+}
+
+function addCostsLibItem() {
+  costsLib.items.push({ id: uid(), name:'' });
+  saveCostsLib(); renderCostsLib();
+  setTimeout(() => {
+    const rows = document.querySelectorAll('#costsLibTableBody tr');
+    if (rows.length) { const inp = rows[rows.length-1].querySelector('input'); if (inp) inp.focus(); }
+  }, 50);
+}
+
+function dupCostsLibItem(id) {
+  const src = costsLib.items.find(x => x.id === id); if (!src) return;
+  costsLib.items.push({ ...src, id: uid(), name: src.name+' (copy)' });
+  saveCostsLib(); renderCostsLib();
+}
+
+function delCostsLibItem(id) {
+  const inUse = data.products.some(p => (p.costs||[]).some(c => c.libId === id));
+  if (inUse && !confirm('This cost item is used in one or more products. Deleting it will unlink those rows. Continue?')) return;
+  costsLib.items = costsLib.items.filter(x => x.id !== id);
+  saveCostsLib(); renderCostsLib();
+}
+
+// ── Close overlays on backdrop click ─────────────────────────────────────────
+document.getElementById('modalOverlay').addEventListener('click',    function(e){ if(e.target===this) closeModal();     });
+document.getElementById('ingLibOverlay').addEventListener('click',   function(e){ if(e.target===this) closeIngLib();    });
+document.getElementById('costsLibOverlay').addEventListener('click', function(e){ if(e.target===this) closeCostsLib();  });
+
+// ── Boot ─────────────────────────────────────────────────────────────────────
 loadData();
 if (data.products.length > 0) {
   if (!data.activeId) data.activeId = data.products[0].id;
   renderSelect(); loadProductUI();
-} else { showEmptyState(true); }
+} else {
+  showEmptyState(true);
+}
 </script>
 </body>
 </html>
