@@ -37,10 +37,11 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
 .header p{font-family:var(--font-serif);font-size:13px;font-style:italic;color:var(--text2);margin-left:20px;margin-top:2px}
 
 .slabel{font-family:var(--font-body);font-size:10px;font-weight:400;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:9px;display:inline-block}
-.slabel-row{display:flex;align-items:center;gap:0;margin-bottom:9px}
+.slabel-row{display:flex;align-items:center;gap:8px;margin-bottom:9px}
 .slabel-row .slabel{margin-bottom:0}
-.manage-link{font-size:10px;color:var(--accent);background:none;border:none;cursor:pointer;font-family:var(--font-body);letter-spacing:0.08em;text-transform:uppercase;padding:0 0 0 10px;opacity:0.8;transition:opacity .15s}
-.manage-link:hover{opacity:1}
+.manage-link{font-size:11px;color:var(--accent);background:var(--accent-bg);border:0.5px solid var(--accent);border-radius:var(--r);cursor:pointer;font-family:var(--font-body);padding:3px 10px;transition:background .15s,color .15s;white-space:nowrap}
+.manage-link:hover{background:var(--accent);color:#fff5ea}
+.lib-hint{font-size:12px;font-family:var(--font-serif);font-style:italic;color:var(--text3);padding:10px 0 4px;line-height:1.5}
 
 .product-bar{display:flex;align-items:center;gap:8px;margin-bottom:1.75rem;flex-wrap:wrap}
 .product-select{flex:1;min-width:180px;border:0.5px solid var(--border2);border-radius:var(--r);padding:7px 10px;font-size:14px;font-family:var(--font-serif);font-weight:400;color:var(--header);background:var(--bg2);outline:none;cursor:pointer;transition:border-color .15s}
@@ -220,7 +221,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
           </tr>
         </tfoot>
       </table>
-      <div class="ing-hint">
+      <div class="ing-hint" id="ingHint">
         Select from your ingredient library → pack size, cost, and unit fill in automatically. Enter <code>amount needed</code> to calculate batch cost.
       </div>
       <button class="add-btn" onclick="addIngredient()">+ add ingredient row</button>
@@ -241,6 +242,7 @@ body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-hei
         </thead>
         <tbody id="costsBody"></tbody>
       </table>
+      <div class="ing-hint" id="costsHint"></div>
       <button class="add-btn" onclick="addCostRow()">+ add cost row</button>
     </div>
 
@@ -487,6 +489,14 @@ function renderIngOptions(selectedId) {
 // ── Product ingredient rows ───────────────────────────────────────────────────
 function renderIngredients() {
   const p = activeProduct(); if (!p) return;
+  const hint = document.getElementById('ingHint');
+  if (hint) {
+    if (ingLib.items.length === 0) {
+      hint.innerHTML = 'Your ingredient library is empty. Click <strong style="color:var(--accent)">Manage library</strong> above to add ingredients first, then come back here to add rows.';
+    } else {
+      hint.innerHTML = 'Select from your ingredient library → pack size, cost, and unit fill in automatically. Enter <code>amount needed</code> to calculate batch cost.';
+    }
+  }
   const tbody = document.getElementById('ingBody');
   tbody.innerHTML = '';
   (p.ingredients||[]).forEach((ing, i) => {
@@ -555,6 +565,12 @@ function renderCostOptions(selectedId) {
 
 function renderCosts() {
   const p = activeProduct(); if (!p) return;
+  const hint = document.getElementById('costsHint');
+  if (hint) {
+    hint.innerHTML = costsLib.items.length === 0
+      ? 'Your costs library is empty. Click <strong style="color:var(--accent)">Manage library</strong> above to add cost items first, then come back here to add rows.'
+      : '';
+  }
   const tbody = document.getElementById('costsBody');
   tbody.innerHTML = '';
   (p.costs||[]).forEach((cost, i) => {
